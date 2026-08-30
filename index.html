@@ -46,6 +46,20 @@ h2 a:hover{border-color:var(--acc)}
 .usernote{font-size:.85rem;background:#fdf8e8;border-left:3px solid #c9a227;padding:6px 10px;border-radius:5px;margin:8px 0 0;white-space:pre-wrap}
 @media(prefers-color-scheme:dark){.usernote{background:#2b2513}}
 .secttl{font-size:1.1rem;margin:26px 0 6px}
+.devs{margin:6px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.dev{font-size:.76rem;padding:2px 8px;border-radius:20px;border:1px solid #c98a2b;color:#a8721a}
+@media(prefers-color-scheme:dark){.dev{color:#dfa945}}
+.fpanel{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;background:var(--card)}
+.fpanel summary{cursor:pointer;font-size:.9rem;color:var(--mut)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 4px}
+.fgrid label{font-size:.78rem;color:var(--mut);display:flex;flex-direction:column;gap:3px}
+.fgrid input[type=number]{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--fg)}
+.ftol{grid-column:1/-1}
+.ftol input{accent-color:var(--acc)}
+.fareas{display:flex;flex-wrap:wrap;gap:6px 12px;margin:8px 0;font-size:.8rem;color:var(--mut)}
+.fareas label{display:flex;gap:4px;align-items:center;cursor:pointer}
+.frow{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--mut)}
+#f-reset{font:inherit;font-size:.76rem;padding:4px 10px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer}
 .matchfilter{display:flex;gap:8px;align-items:center;font-size:.86rem;color:var(--mut);margin:0 0 10px;cursor:pointer}
 .matchfilter input{width:16px;height:16px;accent-color:var(--acc)}
 #hiddencount{font-size:.78rem}
@@ -57,9 +71,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <body><div class="wrap">
 <header>
 <h1>Sommerhuse — Hou / Mikkelmark</h1>
-<p class="sub">33 boliger til salg lige nu · under 1.500.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret søndag den 30. august 2026 kl. 17.23</p>
+<p class="sub">34 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret søndag den 30. august 2026 kl. 17.54</p>
 </header>
-<div class="ch gone"><b>Væk fra markedet:</b> Elsdyrvej 3, Mikkelmark, 9370 Hals</div>
+<div class="ch new"><b>1 nye i dag:</b> Palsgårdsmark 12, Hou, 9370 Hals</div>
 
 <section id="favsec" hidden>
   <h2 class="secttl">★ Mine favoritter <span id="favcount"></span></h2>
@@ -68,8 +82,22 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   <button id="favexport" type="button">Kopiér som tekst</button></p>
 </section>
 <h2 class="secttl" id="alltitle">Alle boliger</h2>
-<label class="matchfilter"><input type="checkbox" id="onlyfull"> Vis kun boliger der opfylder alle kriterier <span id="hiddencount"></span></label>
-<article class="k" data-id="havvejen-17-9370" data-addr="Havvejen 17, Hou, 9370 Hals" data-match="full">
+<details class="fpanel" id="fpanel">
+  <summary>Filtre og tolerancer</summary>
+  <div class="fgrid">
+    <label>Maks. pris (kr.) <input type="number" id="f-price" step="50000" value="1500000"></label>
+    <label>Min. grund (m²) <input type="number" id="f-plot" step="100" value="1300"></label>
+    <label>Min. bolig (m²) <input type="number" id="f-living" step="10" value="" placeholder="ingen"></label>
+    <label>Maks. ejerudgift (kr./md.) <input type="number" id="f-cost" step="100" value="2000"></label>
+    <label class="ftol">Tolerance <output id="f-tolout">10 %</output>
+      <input type="range" id="f-tol" min="0" max="25" step="1" value="10"></label>
+  </div>
+  <div class="fareas" id="f-areas"></div>
+  <div class="frow"><span id="hiddencount"></span> <button type="button" id="f-reset">Nulstil til mine kriterier</button></div>
+</details>
+<label class="matchfilter"><input type="checkbox" id="onlyfull"> Vis kun boliger der opfylder alle kriterier 100 %</label>
+<article class="k" data-id="havvejen-17-9370" data-addr="Havvejen 17, Hou, 9370 Hals" data-match="full"
+  data-price="1480000" data-plot="3399" data-living="145" data-cost="1531" data-area="Hou Syd">
   <div class="rank">1</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/havvejen-17/93803710/" target="_blank" rel="noopener">Havvejen 17, Hou, 9370 Hals</a></h2>
@@ -91,6 +119,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 13 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 24 fotos:</b> Tæt skovbryn af høje fyrretræer og buskads hele vejen rundt om den store naturgrund</p>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
@@ -105,7 +134,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="jagtvej-7-9370" data-addr="Jagtvej 7, 9370 Hals" data-match="full">
+<article class="k" data-id="jagtvej-7-9370" data-addr="Jagtvej 7, 9370 Hals" data-match="full"
+  data-price="798000" data-plot="2539" data-living="98" data-cost="1278" data-area="Lyngoeen">
   <div class="rank">2</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/jagtvej-7-9370-hals/sag-8280001060/" target="_blank" rel="noopener">Jagtvej 7, 9370 Hals</a></h2>
@@ -127,6 +157,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 13 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 6 fotos:</b> Tæt bevoksning af høje løvtræer, nåletræer og buske hele vejen rundt om grunden</p>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
@@ -141,7 +172,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="skovsgaardsvej-64-9370" data-addr="Skovsgårdsvej 64, 9370 Hals" data-match="full">
+<article class="k" data-id="skovsgaardsvej-64-9370" data-addr="Skovsgårdsvej 64, 9370 Hals" data-match="full"
+  data-price="620000" data-plot="2486" data-living="67" data-cost="949" data-area="Koldkaer">
   <div class="rank">3</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/skovsgaardsvej-64/93804155/" target="_blank" rel="noopener">Skovsgårdsvej 64, 9370 Hals</a></h2>
@@ -163,6 +195,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 16 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 15 fotos:</b> Tæt nåle- og løvskov langs grundens kanter hele vejen rundt; klippet plæne i midten</p>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
@@ -177,7 +210,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="rasmus-jensens-vej-39-9370" data-addr="Rasmus Jensens Vej 39, Hou, 9370 Hals" data-match="full">
+<article class="k" data-id="rasmus-jensens-vej-39-9370" data-addr="Rasmus Jensens Vej 39, Hou, 9370 Hals" data-match="full"
+  data-price="745000" data-plot="2028" data-living="62" data-cost="995" data-area="Lyngoeen">
   <div class="rank">4</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-39/93804189/" target="_blank" rel="noopener">Rasmus Jensens Vej 39, Hou, 9370 Hals</a></h2>
@@ -199,6 +233,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 6 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 16 fotos, enighed 3/3:</b> Træer og krat i skel mod bagside/sider, men mod marken er der kun lavt hegn og fri udsigt</p>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
@@ -213,13 +248,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="hou-vest-57-9370" data-addr="Hou Vest 57, Hou, 9370 Hals" data-match="partial">
+<article class="k" data-id="hou-vest-57-9370" data-addr="Hou Vest 57, Hou, 9370 Hals" data-match="partial"
+  data-price="475000" data-plot="1284" data-living="65" data-cost="961" data-area="Mikkelmark">
   <div class="rank">5</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/hou-vest-57/93803877/" target="_blank" rel="noopener">Hou Vest 57, Hou, 9370 Hals</a></h2>
     <p class="price">475.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.284 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.284 m²</li>
       <li><b>Bolig</b> 65 m²</li>
       <li><b>Område</b> Mikkelmark</li>
       <li><b>Ejerudgift</b> 961 kr./md.</li>
@@ -231,9 +267,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 78/100</span>
+      <span class="t">Samlet 77/100</span>
       <span class="t">Nabohus 3 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 1 % under ønsket</span></p>
     
     <p class="note"><b>Set på 28 fotos:</b> Tæt skovbryn og høje træer/buske hele vejen rundt om grunden; åben plæne midt på, men lodret skærmning i alle retninger</p>
     <p class="src">Kilde: edc · første gang set </p>
@@ -249,13 +286,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="svanevej-3-9370" data-addr="Svanevej 3, Hou, 9370 Hals" data-match="partial">
+<article class="k" data-id="svanevej-3-9370" data-addr="Svanevej 3, Hou, 9370 Hals" data-match="partial"
+  data-price="575000" data-plot="1182" data-living="70" data-cost="537" data-area="Lyngoeen">
   <div class="rank">6</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svanevej-3/93804107/" target="_blank" rel="noopener">Svanevej 3, Hou, 9370 Hals</a></h2>
     <p class="price">575.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.182 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.182 m²</li>
       <li><b>Bolig</b> 70 m²</li>
       <li><b>Område</b> Lyngoeen</li>
       <li><b>Ejerudgift</b> 537 kr./md.</li>
@@ -267,9 +305,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 9/10</span>
-      <span class="t">Samlet 77/100</span>
+      <span class="t">Samlet 72/100</span>
       <span class="t">Nabohus 8 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 9 % under ønsket</span></p>
     
     <p class="note"><b>Set på 24 fotos:</b> Tætte løvtræer og krat hele vejen rundt om grunden, samt træhegn/læskærm ved terrassen</p>
     <p class="src">Kilde: edc · første gang set </p>
@@ -285,7 +324,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="roedgranvej-21-9370" data-addr="Rødgranvej 21, Hou, 9370 Hals" data-match="partial">
+<article class="k" data-id="roedgranvej-21-9370" data-addr="Rødgranvej 21, Hou, 9370 Hals" data-match="partial"
+  data-price="275000" data-plot="1548" data-living="" data-cost="199" data-area="Mikkelmark">
   <div class="rank">7</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0063-roedgranvej-21-hou" target="_blank" rel="noopener">Rødgranvej 21, Hou, 9370 Hals</a></h2>
@@ -306,6 +346,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Samlet 71/100</span>
       
     </p>
+    
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 13 fotos:</b> Fra luften ses randbeplantning med træer/buske mod vej og skel, men åbne græspartier midt på; kan ikke vurderes i øjenhøjde</p>
     <p class="src">Kilde: realmaeglerne · første gang set </p>
@@ -321,13 +362,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="roedgranvej-3-9370" data-addr="Rødgranvej 3, Hou, 9370 Hals" data-match="partial">
+<article class="k" data-id="roedgranvej-3-9370" data-addr="Rødgranvej 3, Hou, 9370 Hals" data-match="partial"
+  data-price="625000" data-plot="1261" data-living="66" data-cost="1044" data-area="Mikkelmark">
   <div class="rank">8</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/roedgranvej-3/93803393/" target="_blank" rel="noopener">Rødgranvej 3, Hou, 9370 Hals</a></h2>
     <p class="price">625.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.261 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.261 m²</li>
       <li><b>Bolig</b> 66 m²</li>
       <li><b>Område</b> Mikkelmark</li>
       <li><b>Ejerudgift</b> 1.044 kr./md.</li>
@@ -339,9 +381,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 65/100</span>
+      <span class="t">Samlet 63/100</span>
       <span class="t">Nabohus 12 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 3 % under ønsket</span></p>
     
     <p class="note"><b>Set på 22 fotos, enighed 2/3:</b> Høje nåletræer og buskads i skel næsten hele vejen rundt, træhegn ved terrassen; plænen selv er åben</p>
     <p class="src">Kilde: edc · første gang set </p>
@@ -357,7 +400,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="lyngtoftegaard-3-9370" data-addr="Lyngtoftegård 3, Hou, 9370 Hals" data-match="full">
+<article class="k" data-id="lyngtoftegaard-3-9370" data-addr="Lyngtoftegård 3, Hou, 9370 Hals" data-match="full"
+  data-price="835000" data-plot="1771" data-living="56" data-cost="934" data-area="Hou">
   <div class="rank">9</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/lyngtoftegaard-3/93803880/" target="_blank" rel="noopener">Lyngtoftegård 3, Hou, 9370 Hals</a></h2>
@@ -379,6 +423,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 14 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 19 fotos:</b> Tæt bælte af egetræer, fyr, buske og selvsået krat hele vejen rundt om grunden; desuden trælamel-læskærm ved terrassen</p>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
@@ -393,7 +438,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="rasmus-jensens-vej-4-9370" data-addr="Rasmus Jensens Vej 4, Hou, 9370 Hals" data-match="full">
+<article class="k" data-id="rasmus-jensens-vej-4-9370" data-addr="Rasmus Jensens Vej 4, Hou, 9370 Hals" data-match="full"
+  data-price="775000" data-plot="1618" data-living="54" data-cost="969" data-area="Lyngoeen">
   <div class="rank">10</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-4/93804218/" target="_blank" rel="noopener">Rasmus Jensens Vej 4, Hou, 9370 Hals</a></h2>
@@ -415,6 +461,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 6 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 17 fotos:</b> Tæt bælte af fyr og gran hele vejen rundt om grunden, suppleret af høje mørke plankeskærme ved terrasserne</p>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
@@ -429,7 +476,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="nordvestvej-4-9370" data-addr="Nordvestvej 4, 9370 Hals" data-match="full">
+<article class="k" data-id="nordvestvej-4-9370" data-addr="Nordvestvej 4, 9370 Hals" data-match="full"
+  data-price="1098000" data-plot="2442" data-living="72" data-cost="1065" data-area="Bisnap Nord">
   <div class="rank">11</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/nordvestvej-4-9370-hals/sag-8280001084/" target="_blank" rel="noopener">Nordvestvej 4, 9370 Hals</a></h2>
@@ -451,6 +499,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 4 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 6 fotos:</b> Højt rødt plankeværk om terrassen samt tæt bælte af nåletræer og løvtræer langs skel; åbent naturareal mod terrassesiden</p>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
@@ -465,7 +514,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="dyreengen-5-9370" data-addr="Dyreengen 5, Hou, 9370 Hals" data-match="full">
+<article class="k" data-id="dyreengen-5-9370" data-addr="Dyreengen 5, Hou, 9370 Hals" data-match="full"
+  data-price="649000" data-plot="1406" data-living="58" data-cost="801" data-area="Mikkelmark">
   <div class="rank">12</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/dyreengen-5/93804205/" target="_blank" rel="noopener">Dyreengen 5, Hou, 9370 Hals</a></h2>
@@ -487,6 +537,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 13 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 14 fotos:</b> Høje fyrretræer og tæt krat hele vejen rundt, plankeværk og pergola om terrasserne</p>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
@@ -501,7 +552,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="maagevej-1-9370" data-addr="Mågevej 1, Hou, 9370 Hals" data-match="full">
+<article class="k" data-id="maagevej-1-9370" data-addr="Mågevej 1, Hou, 9370 Hals" data-match="full"
+  data-price="975000" data-plot="1391" data-living="122" data-cost="1177" data-area="Hou">
   <div class="rank">13</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/maagevej/n105085/n1050850000189" target="_blank" rel="noopener">Mågevej 1, Hou, 9370 Hals</a></h2>
@@ -523,6 +575,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 17 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 30 fotos:</b> Høje birke- og løvtræer, hegn og store rhododendronbuske hele vejen rundt om grunden</p>
     <p class="src">Kilde: nybolig · første gang set </p>
     <div class="fav">
@@ -537,7 +590,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="svingelen-6-9370" data-addr="Svingelen 6, 9370 Hals" data-match="full">
+<article class="k" data-id="svingelen-6-9370" data-addr="Svingelen 6, 9370 Hals" data-match="full"
+  data-price="1295000" data-plot="1985" data-living="113" data-cost="1187" data-area="Torndrup Strand">
   <div class="rank">14</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svingelen-6/93803721/" target="_blank" rel="noopener">Svingelen 6, 9370 Hals</a></h2>
@@ -559,6 +613,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 11 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 26 fotos, enighed 3/3:</b> Tæt trærand af fyr og løvtræer samt hæk i skel hele vejen rundt; selve haven er dog en stor åben, klippet plæne med grusindkørsel mod vejen</p>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
@@ -573,13 +628,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="rasmus-jensens-vej-8-9370" data-addr="Rasmus Jensens Vej 8, Hou, 9370 Hals" data-match="partial">
+<article class="k" data-id="rasmus-jensens-vej-8-9370" data-addr="Rasmus Jensens Vej 8, Hou, 9370 Hals" data-match="partial"
+  data-price="625000" data-plot="1259" data-living="54" data-cost="869" data-area="Lyngoeen">
   <div class="rank">15</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-8/93803638/" target="_blank" rel="noopener">Rasmus Jensens Vej 8, Hou, 9370 Hals</a></h2>
     <p class="price">625.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.259 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.259 m²</li>
       <li><b>Bolig</b> 54 m²</li>
       <li><b>Område</b> Lyngoeen</li>
       <li><b>Ejerudgift</b> 869 kr./md.</li>
@@ -591,9 +647,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 75/100</span>
+      <span class="t">Samlet 73/100</span>
       <span class="t">Nabohus 11 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 3 % under ønsket</span></p>
     
     <p class="note"><b>Set på 26 fotos:</b> Tæt nåle- og løvskov hele vejen rundt om grunden, plus høje hegnsfag ved terrassen</p>
     <p class="src">Kilde: edc · første gang set </p>
@@ -609,7 +666,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="koldkaervej-17-9370" data-addr="Koldkærvej 17, Koldkær, 9370 Hals" data-match="partial">
+<article class="k" data-id="koldkaervej-17-9370" data-addr="Koldkærvej 17, Koldkær, 9370 Hals" data-match="partial"
+  data-price="998000" data-plot="2338" data-living="70" data-cost="1830" data-area="Koldkaer">
   <div class="rank">16</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/koldkaervej-17-9370-hals/sag-8280001053/" target="_blank" rel="noopener">Koldkærvej 17, Koldkær, 9370 Hals</a></h2>
@@ -630,6 +688,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Samlet 73/100</span>
       <span class="t">Nabohus 19 m</span>
     </p>
+    
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 6 fotos:</b> Luftfoto viser tæt skovbryn og buskads mod nord, vest og syd samt plankeværk mod øst; ingen billeder i øjenhøjde til at bekræfte afskærmningen</p>
     <p class="src">Kilde: home · første gang set </p>
@@ -645,13 +704,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="vestvej-30-9370" data-addr="Vestvej 30, 9370 Hals" data-match="partial">
+<article class="k" data-id="vestvej-30-9370" data-addr="Vestvej 30, 9370 Hals" data-match="partial"
+  data-price="625000" data-plot="1251" data-living="55" data-cost="1079" data-area="Bisnap Nord">
   <div class="rank">17</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/vestvej-30/93804248/" target="_blank" rel="noopener">Vestvej 30, 9370 Hals</a></h2>
     <p class="price">625.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.251 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.251 m²</li>
       <li><b>Bolig</b> 55 m²</li>
       <li><b>Område</b> Bisnap Nord</li>
       <li><b>Ejerudgift</b> 1.079 kr./md.</li>
@@ -663,9 +723,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 72/100</span>
+      <span class="t">Samlet 70/100</span>
       <span class="t">Nabohus 10 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 4 % under ønsket</span></p>
     
     <p class="note"><b>Set på 23 fotos:</b> Tætte rækker af gran, birk og løvbuske langs alle skel, suppleret af trådhegn og terrassens træværn</p>
     <p class="src">Kilde: edc · første gang set </p>
@@ -681,7 +742,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="svingelen-17-9370" data-addr="Svingelen 17, 9370 Hals" data-match="full">
+<article class="k" data-id="svingelen-17-9370" data-addr="Svingelen 17, 9370 Hals" data-match="full"
+  data-price="695000" data-plot="1367" data-living="60" data-cost="928" data-area="Torndrup Strand">
   <div class="rank">18</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0351-svingelen-17" target="_blank" rel="noopener">Svingelen 17, 9370 Hals</a></h2>
@@ -704,6 +766,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     </p>
     
     
+    
     <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
       <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
@@ -717,44 +780,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="palsgaardsmark-18-9370" data-addr="Palsgårdsmark 18, Hou, 9370 Hals" data-match="partial">
+<article class="k" data-id="planetvej-3-9370" data-addr="Planetvej 3, Gl Bisnap, 9370 Hals" data-match="partial"
+  data-price="785000" data-plot="1444" data-living="65" data-cost="961" data-area="Bisnap">
   <div class="rank">19</div>
-  <div class="body">
-    <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-18/93803971/" target="_blank" rel="noopener">Palsgårdsmark 18, Hou, 9370 Hals</a></h2>
-    <p class="price">745.000 kr.</p>
-    <ul class="facts">
-      <li><b>Grund</b> 1.051 m² <span class="warn">under ønsket</span></li>
-      <li><b>Bolig</b> 75 m²</li>
-      <li><b>Område</b> Mikkelmark</li>
-      <li><b>Ejerudgift</b> 1.021 kr./md.</li>
-      <li><b>Byggeår</b> 1976</li>
-      <li><b>Til salg</b> 340 dage</li>
-      <li><b>Prisudvikling</b> <span class="down">-6 %</span></li>
-    </ul>
-    <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 63/100</span>
-      <span class="t">Nabohus 8 m</span>
-    </p>
-    
-    <p class="note"><b>Set på 24 fotos, enighed 2/3:</b> Høje graner og løvtræer på tre sider, hegn og krat mod skel; kun grusindkørslen/forarealet står forholdsvis åbent</p>
-    <p class="src">Kilde: edc · første gang set </p>
-    <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
-      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
-      <span class="savedmsg" hidden>gemt</span>
-    </div>
-    <div class="noteedit" hidden>
-      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
-      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
-    </div>
-    <p class="usernote" hidden></p>
-  </div>
-</article>
-<article class="k" data-id="planetvej-3-9370" data-addr="Planetvej 3, Gl Bisnap, 9370 Hals" data-match="partial">
-  <div class="rank">20</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/planetvej-3-9370-hals/sag-8280000931/" target="_blank" rel="noopener">Planetvej 3, Gl Bisnap, 9370 Hals</a></h2>
     <p class="price">785.000 kr.</p>
@@ -774,6 +802,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Samlet 60/100</span>
       <span class="t">Nabohus 11 m</span>
     </p>
+    
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 6 fotos:</b> Luftfoto antyder træbælte mod nord/øst, men den store plæne virker åben; ingen øjenhøjdefotos til at vurdere afskærmning</p>
     <p class="src">Kilde: home · første gang set </p>
@@ -789,13 +818,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="mosters-vaenge-22-9370" data-addr="Mosters Vænge 22, 9370 Hals" data-match="partial">
-  <div class="rank">21</div>
+<article class="k" data-id="mosters-vaenge-22-9370" data-addr="Mosters Vænge 22, 9370 Hals" data-match="partial"
+  data-price="798000" data-plot="1225" data-living="102" data-cost="1266" data-area="Koldkaer">
+  <div class="rank">20</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/mostersvaenge/n105912/n1059120000578" target="_blank" rel="noopener">Mosters Vænge 22, 9370 Hals</a></h2>
     <p class="price">798.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.225 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.225 m²</li>
       <li><b>Bolig</b> 102 m²</li>
       <li><b>Område</b> Koldkaer</li>
       <li><b>Ejerudgift</b> 1.266 kr./md.</li>
@@ -807,9 +837,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Good">Score: God</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 57/100</span>
+      <span class="t">Samlet 54/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 6 % under ønsket</span></p>
     
     <p class="note"><b>Set på 30 fotos, enighed 3/3:</b> Høje grantræer og buske på bag- og sideskel; forsiden mod vej lidt mere åben med lav hæk</p>
     <p class="src">Kilde: nybolig · første gang set </p>
@@ -825,13 +856,52 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="fasanvej-4-9370" data-addr="Fasanvej 4, Lyngøen, 9370 Hals" data-match="partial">
+<article class="k" data-id="palsgaardsmark-18-9370" data-addr="Palsgårdsmark 18, Hou, 9370 Hals" data-match="partial"
+  data-price="745000" data-plot="1051" data-living="75" data-cost="1021" data-area="Mikkelmark">
+  <div class="rank">21</div>
+  <div class="body">
+    <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-18/93803971/" target="_blank" rel="noopener">Palsgårdsmark 18, Hou, 9370 Hals</a></h2>
+    <p class="price">745.000 kr.</p>
+    <ul class="facts">
+      <li><b>Grund</b> 1.051 m²</li>
+      <li><b>Bolig</b> 75 m²</li>
+      <li><b>Område</b> Mikkelmark</li>
+      <li><b>Ejerudgift</b> 1.021 kr./md.</li>
+      <li><b>Byggeår</b> 1976</li>
+      <li><b>Til salg</b> 340 dage</li>
+      <li><b>Prisudvikling</b> <span class="down">-6 %</span></li>
+    </ul>
+    <p class="tags">
+      <span class="t v-Good">Score: God</span>
+      <span class="t p-Medium">Privatliv: Middel</span>
+      <span class="t">Grønt 7/10</span>
+      <span class="t">Samlet 53/100</span>
+      <span class="t">Nabohus 8 m</span>
+    </p>
+    <p class="devs"><span class="dev">▾ grund 19 % under ønsket</span></p>
+    
+    <p class="note"><b>Set på 24 fotos, enighed 2/3:</b> Høje graner og løvtræer på tre sider, hegn og krat mod skel; kun grusindkørslen/forarealet står forholdsvis åbent</p>
+    <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
+  </div>
+</article>
+<article class="k" data-id="fasanvej-4-9370" data-addr="Fasanvej 4, Lyngøen, 9370 Hals" data-match="partial"
+  data-price="748000" data-plot="1178" data-living="78" data-cost="1035" data-area="Lyngoeen">
   <div class="rank">22</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/fasanvej-4-9370-hals/sag-8280001079/" target="_blank" rel="noopener">Fasanvej 4, Lyngøen, 9370 Hals</a></h2>
     <p class="price">748.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.178 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.178 m²</li>
       <li><b>Bolig</b> 78 m²</li>
       <li><b>Område</b> Lyngoeen</li>
       <li><b>Ejerudgift</b> 1.035 kr./md.</li>
@@ -843,9 +913,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Good">Score: God</span>
       <span class="t p-Unknown">Privatliv: Ukendt</span>
       <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 54/100</span>
+      <span class="t">Samlet 49/100</span>
       <span class="t">Nabohus 8 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 9 % under ønsket</span></p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 6 fotos:</b> Stort rhododendronbed/hæk mod vest og højt træhegn mod øst; åben klippet plæne mod syd</p>
     <p class="src">Kilde: home · første gang set </p>
@@ -861,13 +932,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="mogensig-16-9370" data-addr="Mogensig 16, Hou, 9370 Hals" data-match="partial">
+<article class="k" data-id="mogensig-16-9370" data-addr="Mogensig 16, Hou, 9370 Hals" data-match="partial"
+  data-price="598000" data-plot="1083" data-living="44" data-cost="737" data-area="Mikkelmark">
   <div class="rank">23</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/mogensig-16-9370-hals/sag-8280001099/" target="_blank" rel="noopener">Mogensig 16, Hou, 9370 Hals</a></h2>
     <p class="price">598.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.083 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.083 m²</li>
       <li><b>Bolig</b> 44 m²</li>
       <li><b>Område</b> Mikkelmark</li>
       <li><b>Ejerudgift</b> 737 kr./md.</li>
@@ -879,9 +951,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Good">Score: God</span>
       <span class="t p-Unknown">Privatliv: Ukendt</span>
       <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 54/100</span>
+      <span class="t">Samlet 45/100</span>
       <span class="t">Nabohus 5 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 17 % under ønsket</span></p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 6 fotos:</b> Tæt, høj hæk hele vejen rundt samt sort trähegn mod vej; store træer i skel mod øst</p>
     <p class="src">Kilde: home · første gang set </p>
@@ -897,7 +970,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="hybenvej-11-9370" data-addr="Hybenvej 11, Hou, 9370 Hals" data-match="full">
+<article class="k" data-id="hybenvej-11-9370" data-addr="Hybenvej 11, Hou, 9370 Hals" data-match="full"
+  data-price="1495000" data-plot="2533" data-living="80" data-cost="1163" data-area="Hou Syd">
   <div class="rank">24</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0340-hybenvej-11" target="_blank" rel="noopener">Hybenvej 11, Hou, 9370 Hals</a></h2>
@@ -919,6 +993,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 9 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 12 fotos:</b> Tæt skov- og kratbevoksning omkring hele grunden; egne bygninger og overdækket terrasse lukker yderligere af</p>
     <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
@@ -933,44 +1008,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="portlandsvej-97c-9370" data-addr="Portlandsvej 97C, 9370 Hals" data-match="full">
+<article class="k" data-id="vestvej-41-9370" data-addr="Vestvej 41, 9370 Hals" data-match="full"
+  data-price="895000" data-plot="1310" data-living="52" data-cost="1047" data-area="Bisnap Nord">
   <div class="rank">25</div>
-  <div class="body">
-    <h2><a href="https://www.realmaeglerne.dk/bolig/448-0328-portlandsvej-97c" target="_blank" rel="noopener">Portlandsvej 97C, 9370 Hals</a></h2>
-    <p class="price">1.148.000 kr.</p>
-    <ul class="facts">
-      <li><b>Grund</b> 71.892 m²</li>
-      <li><b>Bolig</b> 94 m²</li>
-      <li><b>Område</b> Koldkaer</li>
-      <li><b>Ejerudgift</b> 2.142 kr./md.</li>
-      <li><b>Byggeår</b> 1990</li>
-      
-      
-    </ul>
-    <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      
-      <span class="t">Samlet 77/100</span>
-      <span class="t">Nabohus 27 m</span>
-    </p>
-    
-    
-    <p class="src">Kilde: realmaeglerne · første gang set </p>
-    <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
-      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
-      <span class="savedmsg" hidden>gemt</span>
-    </div>
-    <div class="noteedit" hidden>
-      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
-      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
-    </div>
-    <p class="usernote" hidden></p>
-  </div>
-</article>
-<article class="k" data-id="vestvej-41-9370" data-addr="Vestvej 41, 9370 Hals" data-match="full">
-  <div class="rank">26</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/vestvej/n105912/n1059120000575" target="_blank" rel="noopener">Vestvej 41, 9370 Hals</a></h2>
     <p class="price">895.000 kr.</p>
@@ -991,6 +1031,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t">Nabohus 7 m</span>
     </p>
     
+    
     <p class="note"><b>Set på 30 fotos:</b> Tæt bælte af høje løv- og nåletræer samt krat hele vejen rundt om grunden; desuden lamelhegn ved terrassen</p>
     <p class="src">Kilde: nybolig · første gang set </p>
     <div class="fav">
@@ -1005,13 +1046,52 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="kongeparken-17-9370" data-addr="Kongeparken 17, Koldkær, 9370 Hals" data-match="partial">
+<article class="k" data-id="portlandsvej-97c-9370" data-addr="Portlandsvej 97C, 9370 Hals" data-match="partial"
+  data-price="1148000" data-plot="71892" data-living="94" data-cost="2142" data-area="Koldkaer">
+  <div class="rank">26</div>
+  <div class="body">
+    <h2><a href="https://www.realmaeglerne.dk/bolig/448-0328-portlandsvej-97c" target="_blank" rel="noopener">Portlandsvej 97C, 9370 Hals</a></h2>
+    <p class="price">1.148.000 kr.</p>
+    <ul class="facts">
+      <li><b>Grund</b> 71.892 m²</li>
+      <li><b>Bolig</b> 94 m²</li>
+      <li><b>Område</b> Koldkaer</li>
+      <li><b>Ejerudgift</b> 2.142 kr./md.</li>
+      <li><b>Byggeår</b> 1990</li>
+      
+      
+    </ul>
+    <p class="tags">
+      <span class="t v-Average">Score: Middel</span>
+      <span class="t p-Medium">Privatliv: Middel</span>
+      
+      <span class="t">Samlet 73/100</span>
+      <span class="t">Nabohus 27 m</span>
+    </p>
+    <p class="devs"><span class="dev">▾ ejerudgift 7 % over ønsket</span></p>
+    
+    
+    <p class="src">Kilde: realmaeglerne · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
+  </div>
+</article>
+<article class="k" data-id="kongeparken-17-9370" data-addr="Kongeparken 17, Koldkær, 9370 Hals" data-match="partial"
+  data-price="998000" data-plot="1265" data-living="94" data-cost="1190" data-area="Torndrup Strand">
   <div class="rank">27</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/kongeparken/n105912/n1059120000303" target="_blank" rel="noopener">Kongeparken 17, Koldkær, 9370 Hals</a></h2>
     <p class="price">998.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.265 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.265 m²</li>
       <li><b>Bolig</b> 94 m²</li>
       <li><b>Område</b> Torndrup Strand</li>
       <li><b>Ejerudgift</b> 1.190 kr./md.</li>
@@ -1023,9 +1103,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Average">Score: Middel</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 67/100</span>
+      <span class="t">Samlet 65/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 3 % under ønsket</span></p>
     
     <p class="note"><b>Set på 29 fotos:</b> Høje hvide murede gårdhavevægge hele vejen rundt om terrassen plus tæt gran- og løvskov på alle sider af grunden</p>
     <p class="src">Kilde: nybolig · første gang set </p>
@@ -1041,13 +1122,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="soegaardsvej-16-9370" data-addr="Søgårdsvej 16, 9370 Hals" data-match="partial">
+<article class="k" data-id="soegaardsvej-16-9370" data-addr="Søgårdsvej 16, 9370 Hals" data-match="partial"
+  data-price="940000" data-plot="1247" data-living="70" data-cost="863" data-area="Bisnap Nord">
   <div class="rank">28</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/soegaardsvej-16-9370-hals/sag-8280001117/" target="_blank" rel="noopener">Søgårdsvej 16, 9370 Hals</a></h2>
     <p class="price">940.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.247 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.247 m²</li>
       <li><b>Bolig</b> 70 m²</li>
       <li><b>Område</b> Bisnap Nord</li>
       <li><b>Ejerudgift</b> 863 kr./md.</li>
@@ -1059,9 +1141,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Average">Score: Middel</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 66/100</span>
+      <span class="t">Samlet 64/100</span>
       <span class="t">Nabohus 0 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 4 % under ønsket</span></p>
     
     <p class="note"><b>Set på 6 fotos:</b> Høje nåletræer og løvtræer hele vejen rundt, stor rododendron og hæk mod syd/vest</p>
     <p class="src">Kilde: home · første gang set </p>
@@ -1077,13 +1160,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="mosters-vaenge-34-9370" data-addr="Mosters Vænge 34, 9370 Hals" data-match="partial">
+<article class="k" data-id="mosters-vaenge-34-9370" data-addr="Mosters Vænge 34, 9370 Hals" data-match="partial"
+  data-price="995000" data-plot="1161" data-living="107" data-cost="828" data-area="Koldkaer">
   <div class="rank">29</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0191-mosters-vaenge-34" target="_blank" rel="noopener">Mosters Vænge 34, 9370 Hals</a></h2>
     <p class="price">995.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.161 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.161 m²</li>
       <li><b>Bolig</b> 107 m²</li>
       <li><b>Område</b> Koldkaer</li>
       <li><b>Ejerudgift</b> 828 kr./md.</li>
@@ -1095,9 +1179,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Average">Score: Middel</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 66/100</span>
+      <span class="t">Samlet 60/100</span>
       <span class="t">Nabohus 2 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 11 % under ønsket</span></p>
     
     <p class="note"><b>Set på 16 fotos:</b> Tætte nåletræer og løvtræer i skel hele vejen rundt, suppleret af sorte trähegn omkring terrasser</p>
     <p class="src">Kilde: realmaeglerne · første gang set </p>
@@ -1113,30 +1198,32 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="blaalyngvej-16-9370" data-addr="Blålyngvej 16, Lyngøen, 9370 Hals" data-match="partial">
+<article class="k" data-id="palsgaardsmark-12-9370" data-addr="Palsgårdsmark 12, Hou, 9370 Hals" data-match="partial"
+  data-price="897000" data-plot="1049" data-living="65" data-cost="1091" data-area="Mikkelmark">
   <div class="rank">30</div>
   <div class="body">
-    <h2><a href="https://www.realmaeglerne.dk/bolig/448-1036-blaalyngvej-16-lyngoeen" target="_blank" rel="noopener">Blålyngvej 16, Lyngøen, 9370 Hals</a></h2>
-    <p class="price">998.000 kr.</p>
+    <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-12/93803909/" target="_blank" rel="noopener">Palsgårdsmark 12, Hou, 9370 Hals</a></h2>
+    <p class="price">897.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.051 m² <span class="warn">under ønsket</span></li>
-      <li><b>Bolig</b> 108 m²</li>
-      <li><b>Område</b> Torndal Strand</li>
-      <li><b>Ejerudgift</b> 1.459 kr./md.</li>
-      <li><b>Byggeår</b> 1971</li>
-      
-      
+      <li><b>Grund</b> 1.049 m²</li>
+      <li><b>Bolig</b> 65 m²</li>
+      <li><b>Område</b> Mikkelmark</li>
+      <li><b>Ejerudgift</b> 1.091 kr./md.</li>
+      <li><b>Byggeår</b> 1969 (omb. 1975)</li>
+      <li><b>Til salg</b> 156 dage</li>
+      <li><b>Prisudvikling</b> <span class="down">-5 %</span></li>
     </ul>
     <p class="tags">
       <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      
-      <span class="t">Samlet 53/100</span>
+      <span class="t p-High">Privatliv: Høj</span>
+      <span class="t">Grønt 7/10</span>
+      <span class="t">Samlet 58/100</span>
       <span class="t">Nabohus 5 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 19 % under ønsket</span></p>
     
-    
-    <p class="src">Kilde: realmaeglerne · første gang set </p>
+    <p class="note"><b>Set på 20 fotos:</b> Høje hække, thujaer og træer hele vejen rundt om plænen og terrasserne</p>
+    <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
       <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
@@ -1149,8 +1236,47 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="portlandsvej-137-9370" data-addr="Portlandsvej 137, 9370 Hals" data-match="partial">
+<article class="k" data-id="kimbrervej-6-9370" data-addr="Kimbrervej 6, Koldkær, 9370 Hals" data-match="partial"
+  data-price="1198000" data-plot="1267" data-living="107" data-cost="1401" data-area="Torndrup Strand">
   <div class="rank">31</div>
+  <div class="body">
+    <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/kimbrervej-6/93804206/" target="_blank" rel="noopener">Kimbrervej 6, Koldkær, 9370 Hals</a></h2>
+    <p class="price">1.198.000 kr.</p>
+    <ul class="facts">
+      <li><b>Grund</b> 1.267 m²</li>
+      <li><b>Bolig</b> 107 m²</li>
+      <li><b>Område</b> Torndrup Strand</li>
+      <li><b>Ejerudgift</b> 1.401 kr./md.</li>
+      <li><b>Byggeår</b> 1950 (omb. 2005)</li>
+      <li><b>Til salg</b> 107 dage</li>
+      
+    </ul>
+    <p class="tags">
+      <span class="t v-Average">Score: Middel</span>
+      <span class="t p-Medium">Privatliv: Middel</span>
+      <span class="t">Grønt 5/10</span>
+      <span class="t">Samlet 49/100</span>
+      <span class="t">Nabohus 4 m</span>
+    </p>
+    <p class="devs"><span class="dev">▾ grund 3 % under ønsket</span></p>
+    
+    <p class="note"><b>Set på 16 fotos, enighed 3/3:</b> Klippede hække, træhegn og højt træbælte mod bagsiden; hækkene er dog relativt lave og plænen åben</p>
+    <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
+  </div>
+</article>
+<article class="k" data-id="portlandsvej-137-9370" data-addr="Portlandsvej 137, 9370 Hals" data-match="partial"
+  data-price="695000" data-plot="71893" data-living="53" data-cost="2134" data-area="Koldkaer">
+  <div class="rank">32</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/portlandsvej-137-1/93803264/" target="_blank" rel="noopener">Portlandsvej 137, 9370 Hals</a></h2>
     <p class="price">695.000 kr.</p>
@@ -1167,9 +1293,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Average">Score: Middel</span>
       <span class="t p-Low">Privatliv: Lav</span>
       <span class="t">Grønt 3/10</span>
-      <span class="t">Samlet 52/100</span>
+      <span class="t">Samlet 48/100</span>
       <span class="t">Nabohus 24 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ ejerudgift 7 % over ønsket</span></p>
     <p class="warnbox">⚠ mulig indblik fra naboer — ikke bekraeftet (3/3): Ferielejlighed i feriecenter med fælles, åben plæne og altaner side om side — ingen hæk eller beplantning skærmer af.</p>
     <p class="note"><b>Set på 30 fotos, enighed 3/3:</b> Stort set ingen lodret afskærmning: altan og terrasse vender ud mod klippet fællesplæne; kun spredte fyrretræer og krat i periferien</p>
     <p class="src">Kilde: edc · første gang set </p>
@@ -1185,13 +1312,14 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="nordmarksvej-18-9370" data-addr="Nordmarksvej 18, 9370 Hals" data-match="partial">
-  <div class="rank">32</div>
+<article class="k" data-id="nordmarksvej-18-9370" data-addr="Nordmarksvej 18, 9370 Hals" data-match="partial"
+  data-price="799000" data-plot="1195" data-living="64" data-cost="841" data-area="Torndrup Strand">
+  <div class="rank">33</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/nordmarksvej/n105912/n1059120000198" target="_blank" rel="noopener">Nordmarksvej 18, 9370 Hals</a></h2>
     <p class="price">799.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.195 m² <span class="warn">under ønsket</span></li>
+      <li><b>Grund</b> 1.195 m²</li>
       <li><b>Bolig</b> 64 m²</li>
       <li><b>Område</b> Torndrup Strand</li>
       <li><b>Ejerudgift</b> 841 kr./md.</li>
@@ -1203,9 +1331,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <span class="t v-Average">Score: Middel</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 52/100</span>
+      <span class="t">Samlet 48/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 8 % under ønsket</span></p>
     
     <p class="note"><b>Set på 30 fotos, enighed 3/3:</b> Højt sort plankeværk om terrassen, buske og skovbryn i skel; løvtræer er bladløse på vinterfotos, så nordsiden er delvist åben</p>
     <p class="src">Kilde: nybolig · første gang set </p>
@@ -1221,30 +1350,32 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="kimbrervej-6-9370" data-addr="Kimbrervej 6, Koldkær, 9370 Hals" data-match="partial">
-  <div class="rank">33</div>
+<article class="k" data-id="blaalyngvej-16-9370" data-addr="Blålyngvej 16, Lyngøen, 9370 Hals" data-match="partial"
+  data-price="998000" data-plot="1051" data-living="108" data-cost="1459" data-area="Torndal Strand">
+  <div class="rank">34</div>
   <div class="body">
-    <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/kimbrervej-6/93804206/" target="_blank" rel="noopener">Kimbrervej 6, Koldkær, 9370 Hals</a></h2>
-    <p class="price">1.198.000 kr.</p>
+    <h2><a href="https://www.realmaeglerne.dk/bolig/448-1036-blaalyngvej-16-lyngoeen" target="_blank" rel="noopener">Blålyngvej 16, Lyngøen, 9370 Hals</a></h2>
+    <p class="price">998.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.267 m² <span class="warn">under ønsket</span></li>
-      <li><b>Bolig</b> 107 m²</li>
-      <li><b>Område</b> Torndrup Strand</li>
-      <li><b>Ejerudgift</b> 1.401 kr./md.</li>
-      <li><b>Byggeår</b> 1950 (omb. 2005)</li>
-      <li><b>Til salg</b> 107 dage</li>
+      <li><b>Grund</b> 1.051 m²</li>
+      <li><b>Bolig</b> 108 m²</li>
+      <li><b>Område</b> Torndal Strand</li>
+      <li><b>Ejerudgift</b> 1.459 kr./md.</li>
+      <li><b>Byggeår</b> 1971</li>
+      
       
     </ul>
     <p class="tags">
       <span class="t v-Average">Score: Middel</span>
       <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 51/100</span>
-      <span class="t">Nabohus 4 m</span>
+      
+      <span class="t">Samlet 43/100</span>
+      <span class="t">Nabohus 5 m</span>
     </p>
+    <p class="devs"><span class="dev">▾ grund 19 % under ønsket</span></p>
     
-    <p class="note"><b>Set på 16 fotos, enighed 3/3:</b> Klippede hække, træhegn og højt træbælte mod bagsiden; hækkene er dog relativt lave og plænen åben</p>
-    <p class="src">Kilde: edc · første gang set </p>
+    
+    <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
       <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
@@ -1346,23 +1477,66 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
 
   buildFavs();
 
-  // Filter: vis kun boliger uden afvigelser fra kriterierne.
-  var FKEY='hou-kunfuldmatch';
-  var cb=document.getElementById('onlyfull');
-  function applyFilter(){
-    var on=cb.checked, hidden=0;
-    document.querySelectorAll('#alltitle ~ article.k, article.k').forEach(function(c){
-      if(!c.dataset.match) return;
-      var hide=on && c.dataset.match!=='full';
-      c.style.display=hide?'none':'';
-      if(hide) hidden++;
+  // Filtre og tolerancer - virker med det samme og huskes paa telefonen.
+  var FKEY='hou-filtre-v1';
+  var defs={price:1500000,plot:1300,living:null,cost:2000,tol:10,areas:null,onlyfull:false};
+  function loadF(){ try{ return Object.assign({},defs,JSON.parse(localStorage.getItem(FKEY)||'{}')) }catch(e){ return Object.assign({},defs) } }
+  function saveF(f){ try{ localStorage.setItem(FKEY,JSON.stringify(f)) }catch(e){} }
+  var F=loadF();
+
+  var cards=[].slice.call(document.querySelectorAll('article.k[data-id]'));
+  var allAreas=[]; cards.forEach(function(c){ var a=c.dataset.area; if(a&&allAreas.indexOf(a)<0) allAreas.push(a) });
+  allAreas.sort();
+  var areaBox=document.getElementById('f-areas');
+  allAreas.forEach(function(a){
+    var l=document.createElement('label');
+    var cb=document.createElement('input'); cb.type='checkbox'; cb.value=a;
+    cb.checked=!F.areas||F.areas.indexOf(a)>=0;
+    cb.addEventListener('change',apply);
+    l.appendChild(cb); l.appendChild(document.createTextNode(a));
+    areaBox.appendChild(l);
+  });
+
+  var el={price:document.getElementById('f-price'),plot:document.getElementById('f-plot'),
+          living:document.getElementById('f-living'),cost:document.getElementById('f-cost'),
+          tol:document.getElementById('f-tol'),tolout:document.getElementById('f-tolout'),
+          onlyfull:document.getElementById('onlyfull')};
+  el.price.value=F.price; el.plot.value=F.plot; el.living.value=F.living==null?'':F.living;
+  el.cost.value=F.cost; el.tol.value=F.tol; el.onlyfull.checked=!!F.onlyfull;
+
+  function num(v){ var n=Number(v); return isFinite(n)&&v!==''?n:null }
+  function apply(){
+    F={price:num(el.price.value),plot:num(el.plot.value),living:num(el.living.value),
+       cost:num(el.cost.value),tol:num(el.tol.value)||0,onlyfull:el.onlyfull.checked,
+       areas:[].slice.call(areaBox.querySelectorAll('input:checked')).map(function(c){return c.value})};
+    el.tolout.textContent=F.tol+' %';
+    var t=F.tol/100, hidden=0;
+    cards.forEach(function(c){
+      var price=num(c.dataset.price),plot=num(c.dataset.plot),living=num(c.dataset.living),cost=num(c.dataset.cost);
+      var show=true;
+      if(F.onlyfull){ show=c.dataset.match==='full'; }
+      if(show&&F.price!=null&&price!=null&&price>F.price*(1+(F.onlyfull?0:t))) show=false;
+      if(show&&F.plot!=null&&plot!=null&&plot<F.plot*(1-(F.onlyfull?0:t))) show=false;
+      if(show&&F.living!=null&&living!=null&&living<F.living*(1-(F.onlyfull?0:t))) show=false;
+      if(show&&F.cost!=null&&cost!=null&&cost>F.cost*(1+(F.onlyfull?0:t))) show=false;
+      if(show&&F.areas&&F.areas.length<allAreas.length&&F.areas.indexOf(c.dataset.area)<0) show=false;
+      c.style.display=show?'':'none';
+      if(!show) hidden++;
     });
-    document.getElementById('hiddencount').textContent=on&&hidden?('('+hidden+' skjult)'):'';
-    try{ localStorage.setItem(FKEY,on?'1':'0') }catch(e){}
+    document.getElementById('hiddencount').textContent=hidden?hidden+' boliger skjult af dine filtre':'alle boliger vises';
+    saveF(F);
   }
-  try{ cb.checked=localStorage.getItem(FKEY)==='1' }catch(e){}
-  cb.addEventListener('change',applyFilter);
-  applyFilter();
+  ['price','plot','living','cost','tol'].forEach(function(k){ el[k].addEventListener('input',apply) });
+  el.onlyfull.addEventListener('change',apply);
+  document.getElementById('f-reset').addEventListener('click',function(){
+    try{ localStorage.removeItem(FKEY) }catch(e){}
+    F=Object.assign({},defs);
+    el.price.value=F.price; el.plot.value=F.plot; el.living.value=F.living==null?'':F.living;
+    el.cost.value=F.cost; el.tol.value=F.tol; el.onlyfull.checked=false;
+    areaBox.querySelectorAll('input').forEach(function(c){ c.checked=true });
+    apply();
+  });
+  apply();
 })();
 </script>
 </body></html>
