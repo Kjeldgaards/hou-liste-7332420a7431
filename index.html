@@ -46,6 +46,9 @@ h2 a:hover{border-color:var(--acc)}
 .usernote{font-size:.85rem;background:#fdf8e8;border-left:3px solid #c9a227;padding:6px 10px;border-radius:5px;margin:8px 0 0;white-space:pre-wrap}
 @media(prefers-color-scheme:dark){.usernote{background:#2b2513}}
 .secttl{font-size:1.1rem;margin:26px 0 6px}
+.matchfilter{display:flex;gap:8px;align-items:center;font-size:.86rem;color:var(--mut);margin:0 0 10px;cursor:pointer}
+.matchfilter input{width:16px;height:16px;accent-color:var(--acc)}
+#hiddencount{font-size:.78rem}
 #favsec{margin-top:18px}
 .favhelp{font-size:.76rem;color:var(--mut);margin:4px 0 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .gone-badge{font-size:.72rem;color:#a33;border:1px solid #a33;border-radius:12px;padding:1px 7px;margin-left:6px}
@@ -54,9 +57,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <body><div class="wrap">
 <header>
 <h1>Sommerhuse — Hou / Mikkelmark</h1>
-<p class="sub">33 boliger til salg lige nu · under 1.500.000 kr · grund fra 1000 m² · bedste value for money først<br>Opdateret søndag den 30. august 2026 kl. 16.36</p>
+<p class="sub">33 boliger til salg lige nu · under 1.500.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret søndag den 30. august 2026 kl. 17.23</p>
 </header>
-<div class="ch none">Ingen ændringer siden i går.</div>
+<div class="ch gone"><b>Væk fra markedet:</b> Elsdyrvej 3, Mikkelmark, 9370 Hals</div>
 
 <section id="favsec" hidden>
   <h2 class="secttl">★ Mine favoritter <span id="favcount"></span></h2>
@@ -65,7 +68,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   <button id="favexport" type="button">Kopiér som tekst</button></p>
 </section>
 <h2 class="secttl" id="alltitle">Alle boliger</h2>
-<article class="k" data-id="havvejen-17-9370" data-addr="Havvejen 17, Hou, 9370 Hals">
+<label class="matchfilter"><input type="checkbox" id="onlyfull"> Vis kun boliger der opfylder alle kriterier <span id="hiddencount"></span></label>
+<article class="k" data-id="havvejen-17-9370" data-addr="Havvejen 17, Hou, 9370 Hals" data-match="full">
   <div class="rank">1</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/havvejen-17/93803710/" target="_blank" rel="noopener">Havvejen 17, Hou, 9370 Hals</a></h2>
@@ -80,10 +84,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <li><b>Prisudvikling</b> <span class="down">-10 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Value: Fremragende</span>
+      <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 9/10</span>
-      <span class="t">Score 99/100</span>
+      <span class="t">Samlet 99/100</span>
       <span class="t">Nabohus 13 m</span>
     </p>
     
@@ -101,7 +105,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="jagtvej-7-9370" data-addr="Jagtvej 7, 9370 Hals">
+<article class="k" data-id="jagtvej-7-9370" data-addr="Jagtvej 7, 9370 Hals" data-match="full">
   <div class="rank">2</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/jagtvej-7-9370-hals/sag-8280001060/" target="_blank" rel="noopener">Jagtvej 7, 9370 Hals</a></h2>
@@ -116,10 +120,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Value: Fremragende</span>
+      <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 9/10</span>
-      <span class="t">Score 98/100</span>
+      <span class="t">Samlet 98/100</span>
       <span class="t">Nabohus 13 m</span>
     </p>
     
@@ -137,7 +141,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="skovsgaardsvej-64-9370" data-addr="Skovsgårdsvej 64, 9370 Hals">
+<article class="k" data-id="skovsgaardsvej-64-9370" data-addr="Skovsgårdsvej 64, 9370 Hals" data-match="full">
   <div class="rank">3</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/skovsgaardsvej-64/93804155/" target="_blank" rel="noopener">Skovsgårdsvej 64, 9370 Hals</a></h2>
@@ -152,10 +156,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <li><b>Prisudvikling</b> <span class="down">-3 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Value: Fremragende</span>
+      <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 92/100</span>
+      <span class="t">Samlet 92/100</span>
       <span class="t">Nabohus 16 m</span>
     </p>
     
@@ -173,7 +177,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="rasmus-jensens-vej-39-9370" data-addr="Rasmus Jensens Vej 39, Hou, 9370 Hals">
+<article class="k" data-id="rasmus-jensens-vej-39-9370" data-addr="Rasmus Jensens Vej 39, Hou, 9370 Hals" data-match="full">
   <div class="rank">4</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-39/93804189/" target="_blank" rel="noopener">Rasmus Jensens Vej 39, Hou, 9370 Hals</a></h2>
@@ -188,10 +192,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <li><b>Prisudvikling</b> <span class="down">-12 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Value: Fremragende</span>
+      <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 5/10</span>
-      <span class="t">Score 84/100</span>
+      <span class="t">Samlet 84/100</span>
       <span class="t">Nabohus 6 m</span>
     </p>
     
@@ -209,7 +213,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="hou-vest-57-9370" data-addr="Hou Vest 57, Hou, 9370 Hals">
+<article class="k" data-id="hou-vest-57-9370" data-addr="Hou Vest 57, Hou, 9370 Hals" data-match="partial">
   <div class="rank">5</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/hou-vest-57/93803877/" target="_blank" rel="noopener">Hou Vest 57, Hou, 9370 Hals</a></h2>
@@ -224,10 +228,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Value: Fremragende</span>
+      <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 78/100</span>
+      <span class="t">Samlet 78/100</span>
       <span class="t">Nabohus 3 m</span>
     </p>
     
@@ -245,7 +249,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="svanevej-3-9370" data-addr="Svanevej 3, Hou, 9370 Hals">
+<article class="k" data-id="svanevej-3-9370" data-addr="Svanevej 3, Hou, 9370 Hals" data-match="partial">
   <div class="rank">6</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svanevej-3/93804107/" target="_blank" rel="noopener">Svanevej 3, Hou, 9370 Hals</a></h2>
@@ -260,10 +264,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Value: Fremragende</span>
+      <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 9/10</span>
-      <span class="t">Score 77/100</span>
+      <span class="t">Samlet 77/100</span>
       <span class="t">Nabohus 8 m</span>
     </p>
     
@@ -281,7 +285,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="roedgranvej-21-9370" data-addr="Rødgranvej 21, Hou, 9370 Hals">
+<article class="k" data-id="roedgranvej-21-9370" data-addr="Rødgranvej 21, Hou, 9370 Hals" data-match="partial">
   <div class="rank">7</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0063-roedgranvej-21-hou" target="_blank" rel="noopener">Rødgranvej 21, Hou, 9370 Hals</a></h2>
@@ -296,10 +300,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Value: Fremragende</span>
+      <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-Unknown">Privatliv: Ukendt</span>
       <span class="t">Grønt 7/10</span>
-      <span class="t">Score 71/100</span>
+      <span class="t">Samlet 71/100</span>
       
     </p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -317,7 +321,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="roedgranvej-3-9370" data-addr="Rødgranvej 3, Hou, 9370 Hals">
+<article class="k" data-id="roedgranvej-3-9370" data-addr="Rødgranvej 3, Hou, 9370 Hals" data-match="partial">
   <div class="rank">8</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/roedgranvej-3/93803393/" target="_blank" rel="noopener">Rødgranvej 3, Hou, 9370 Hals</a></h2>
@@ -332,10 +336,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Value: Fremragende</span>
+      <span class="t v-Excellent">Score: Fremragende</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 7/10</span>
-      <span class="t">Score 65/100</span>
+      <span class="t">Samlet 65/100</span>
       <span class="t">Nabohus 12 m</span>
     </p>
     
@@ -353,7 +357,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="lyngtoftegaard-3-9370" data-addr="Lyngtoftegård 3, Hou, 9370 Hals">
+<article class="k" data-id="lyngtoftegaard-3-9370" data-addr="Lyngtoftegård 3, Hou, 9370 Hals" data-match="full">
   <div class="rank">9</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/lyngtoftegaard-3/93803880/" target="_blank" rel="noopener">Lyngtoftegård 3, Hou, 9370 Hals</a></h2>
@@ -368,10 +372,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 9/10</span>
-      <span class="t">Score 90/100</span>
+      <span class="t">Samlet 90/100</span>
       <span class="t">Nabohus 14 m</span>
     </p>
     
@@ -389,7 +393,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="rasmus-jensens-vej-4-9370" data-addr="Rasmus Jensens Vej 4, Hou, 9370 Hals">
+<article class="k" data-id="rasmus-jensens-vej-4-9370" data-addr="Rasmus Jensens Vej 4, Hou, 9370 Hals" data-match="full">
   <div class="rank">10</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-4/93804218/" target="_blank" rel="noopener">Rasmus Jensens Vej 4, Hou, 9370 Hals</a></h2>
@@ -404,10 +408,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 90/100</span>
+      <span class="t">Samlet 90/100</span>
       <span class="t">Nabohus 6 m</span>
     </p>
     
@@ -425,7 +429,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="nordvestvej-4-9370" data-addr="Nordvestvej 4, 9370 Hals">
+<article class="k" data-id="nordvestvej-4-9370" data-addr="Nordvestvej 4, 9370 Hals" data-match="full">
   <div class="rank">11</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/nordvestvej-4-9370-hals/sag-8280001084/" target="_blank" rel="noopener">Nordvestvej 4, 9370 Hals</a></h2>
@@ -440,10 +444,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 7/10</span>
-      <span class="t">Score 90/100</span>
+      <span class="t">Samlet 90/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
     
@@ -461,7 +465,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="dyreengen-5-9370" data-addr="Dyreengen 5, Hou, 9370 Hals">
+<article class="k" data-id="dyreengen-5-9370" data-addr="Dyreengen 5, Hou, 9370 Hals" data-match="full">
   <div class="rank">12</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/dyreengen-5/93804205/" target="_blank" rel="noopener">Dyreengen 5, Hou, 9370 Hals</a></h2>
@@ -476,10 +480,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <li><b>Prisudvikling</b> <span class="down">-5 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 84/100</span>
+      <span class="t">Samlet 84/100</span>
       <span class="t">Nabohus 13 m</span>
     </p>
     
@@ -497,7 +501,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="maagevej-1-9370" data-addr="Mågevej 1, Hou, 9370 Hals">
+<article class="k" data-id="maagevej-1-9370" data-addr="Mågevej 1, Hou, 9370 Hals" data-match="full">
   <div class="rank">13</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/maagevej/n105085/n1050850000189" target="_blank" rel="noopener">Mågevej 1, Hou, 9370 Hals</a></h2>
@@ -512,10 +516,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 84/100</span>
+      <span class="t">Samlet 84/100</span>
       <span class="t">Nabohus 17 m</span>
     </p>
     
@@ -533,7 +537,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="svingelen-6-9370" data-addr="Svingelen 6, 9370 Hals">
+<article class="k" data-id="svingelen-6-9370" data-addr="Svingelen 6, 9370 Hals" data-match="full">
   <div class="rank">14</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svingelen-6/93803721/" target="_blank" rel="noopener">Svingelen 6, 9370 Hals</a></h2>
@@ -548,10 +552,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 7/10</span>
-      <span class="t">Score 77/100</span>
+      <span class="t">Samlet 77/100</span>
       <span class="t">Nabohus 11 m</span>
     </p>
     
@@ -569,7 +573,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="rasmus-jensens-vej-8-9370" data-addr="Rasmus Jensens Vej 8, Hou, 9370 Hals">
+<article class="k" data-id="rasmus-jensens-vej-8-9370" data-addr="Rasmus Jensens Vej 8, Hou, 9370 Hals" data-match="partial">
   <div class="rank">15</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-8/93803638/" target="_blank" rel="noopener">Rasmus Jensens Vej 8, Hou, 9370 Hals</a></h2>
@@ -584,10 +588,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <li><b>Prisudvikling</b> <span class="down">-10 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 75/100</span>
+      <span class="t">Samlet 75/100</span>
       <span class="t">Nabohus 11 m</span>
     </p>
     
@@ -605,7 +609,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="koldkaervej-17-9370" data-addr="Koldkærvej 17, Koldkær, 9370 Hals">
+<article class="k" data-id="koldkaervej-17-9370" data-addr="Koldkærvej 17, Koldkær, 9370 Hals" data-match="partial">
   <div class="rank">16</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/koldkaervej-17-9370-hals/sag-8280001053/" target="_blank" rel="noopener">Koldkærvej 17, Koldkær, 9370 Hals</a></h2>
@@ -620,10 +624,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-Unknown">Privatliv: Ukendt</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 73/100</span>
+      <span class="t">Samlet 73/100</span>
       <span class="t">Nabohus 19 m</span>
     </p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -641,7 +645,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="vestvej-30-9370" data-addr="Vestvej 30, 9370 Hals">
+<article class="k" data-id="vestvej-30-9370" data-addr="Vestvej 30, 9370 Hals" data-match="partial">
   <div class="rank">17</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/vestvej-30/93804248/" target="_blank" rel="noopener">Vestvej 30, 9370 Hals</a></h2>
@@ -656,10 +660,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 72/100</span>
+      <span class="t">Samlet 72/100</span>
       <span class="t">Nabohus 10 m</span>
     </p>
     
@@ -677,7 +681,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="svingelen-17-9370" data-addr="Svingelen 17, 9370 Hals">
+<article class="k" data-id="svingelen-17-9370" data-addr="Svingelen 17, 9370 Hals" data-match="full">
   <div class="rank">18</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0351-svingelen-17" target="_blank" rel="noopener">Svingelen 17, 9370 Hals</a></h2>
@@ -692,10 +696,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       
-      <span class="t">Score 68/100</span>
+      <span class="t">Samlet 68/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
     
@@ -713,7 +717,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="palsgaardsmark-18-9370" data-addr="Palsgårdsmark 18, Hou, 9370 Hals">
+<article class="k" data-id="palsgaardsmark-18-9370" data-addr="Palsgårdsmark 18, Hou, 9370 Hals" data-match="partial">
   <div class="rank">19</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-18/93803971/" target="_blank" rel="noopener">Palsgårdsmark 18, Hou, 9370 Hals</a></h2>
@@ -728,10 +732,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <li><b>Prisudvikling</b> <span class="down">-6 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 7/10</span>
-      <span class="t">Score 63/100</span>
+      <span class="t">Samlet 63/100</span>
       <span class="t">Nabohus 8 m</span>
     </p>
     
@@ -749,7 +753,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="planetvej-3-9370" data-addr="Planetvej 3, Gl Bisnap, 9370 Hals">
+<article class="k" data-id="planetvej-3-9370" data-addr="Planetvej 3, Gl Bisnap, 9370 Hals" data-match="partial">
   <div class="rank">20</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/planetvej-3-9370-hals/sag-8280000931/" target="_blank" rel="noopener">Planetvej 3, Gl Bisnap, 9370 Hals</a></h2>
@@ -764,10 +768,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-Unknown">Privatliv: Ukendt</span>
       <span class="t">Grønt 5/10</span>
-      <span class="t">Score 60/100</span>
+      <span class="t">Samlet 60/100</span>
       <span class="t">Nabohus 11 m</span>
     </p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -785,7 +789,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="mosters-vaenge-22-9370" data-addr="Mosters Vænge 22, 9370 Hals">
+<article class="k" data-id="mosters-vaenge-22-9370" data-addr="Mosters Vænge 22, 9370 Hals" data-match="partial">
   <div class="rank">21</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/mostersvaenge/n105912/n1059120000578" target="_blank" rel="noopener">Mosters Vænge 22, 9370 Hals</a></h2>
@@ -800,10 +804,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 6/10</span>
-      <span class="t">Score 57/100</span>
+      <span class="t">Samlet 57/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
     
@@ -821,7 +825,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="fasanvej-4-9370" data-addr="Fasanvej 4, Lyngøen, 9370 Hals">
+<article class="k" data-id="fasanvej-4-9370" data-addr="Fasanvej 4, Lyngøen, 9370 Hals" data-match="partial">
   <div class="rank">22</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/fasanvej-4-9370-hals/sag-8280001079/" target="_blank" rel="noopener">Fasanvej 4, Lyngøen, 9370 Hals</a></h2>
@@ -836,10 +840,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-Unknown">Privatliv: Ukendt</span>
       <span class="t">Grønt 5/10</span>
-      <span class="t">Score 54/100</span>
+      <span class="t">Samlet 54/100</span>
       <span class="t">Nabohus 8 m</span>
     </p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -857,7 +861,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="mogensig-16-9370" data-addr="Mogensig 16, Hou, 9370 Hals">
+<article class="k" data-id="mogensig-16-9370" data-addr="Mogensig 16, Hou, 9370 Hals" data-match="partial">
   <div class="rank">23</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/mogensig-16-9370-hals/sag-8280001099/" target="_blank" rel="noopener">Mogensig 16, Hou, 9370 Hals</a></h2>
@@ -872,10 +876,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Value: God</span>
+      <span class="t v-Good">Score: God</span>
       <span class="t p-Unknown">Privatliv: Ukendt</span>
       <span class="t">Grønt 6/10</span>
-      <span class="t">Score 54/100</span>
+      <span class="t">Samlet 54/100</span>
       <span class="t">Nabohus 5 m</span>
     </p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -893,7 +897,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="hybenvej-11-9370" data-addr="Hybenvej 11, Hou, 9370 Hals">
+<article class="k" data-id="hybenvej-11-9370" data-addr="Hybenvej 11, Hou, 9370 Hals" data-match="full">
   <div class="rank">24</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0340-hybenvej-11" target="_blank" rel="noopener">Hybenvej 11, Hou, 9370 Hals</a></h2>
@@ -908,10 +912,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 89/100</span>
+      <span class="t">Samlet 89/100</span>
       <span class="t">Nabohus 9 m</span>
     </p>
     
@@ -929,7 +933,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="portlandsvej-97c-9370" data-addr="Portlandsvej 97C, 9370 Hals">
+<article class="k" data-id="portlandsvej-97c-9370" data-addr="Portlandsvej 97C, 9370 Hals" data-match="full">
   <div class="rank">25</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0328-portlandsvej-97c" target="_blank" rel="noopener">Portlandsvej 97C, 9370 Hals</a></h2>
@@ -944,10 +948,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       
-      <span class="t">Score 77/100</span>
+      <span class="t">Samlet 77/100</span>
       <span class="t">Nabohus 27 m</span>
     </p>
     
@@ -965,7 +969,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="vestvej-41-9370" data-addr="Vestvej 41, 9370 Hals">
+<article class="k" data-id="vestvej-41-9370" data-addr="Vestvej 41, 9370 Hals" data-match="full">
   <div class="rank">26</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/vestvej/n105912/n1059120000575" target="_blank" rel="noopener">Vestvej 41, 9370 Hals</a></h2>
@@ -980,10 +984,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 7/10</span>
-      <span class="t">Score 75/100</span>
+      <span class="t">Samlet 75/100</span>
       <span class="t">Nabohus 7 m</span>
     </p>
     
@@ -1001,7 +1005,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="kongeparken-17-9370" data-addr="Kongeparken 17, Koldkær, 9370 Hals">
+<article class="k" data-id="kongeparken-17-9370" data-addr="Kongeparken 17, Koldkær, 9370 Hals" data-match="partial">
   <div class="rank">27</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/kongeparken/n105912/n1059120000303" target="_blank" rel="noopener">Kongeparken 17, Koldkær, 9370 Hals</a></h2>
@@ -1016,10 +1020,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 67/100</span>
+      <span class="t">Samlet 67/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
     
@@ -1037,7 +1041,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="soegaardsvej-16-9370" data-addr="Søgårdsvej 16, 9370 Hals">
+<article class="k" data-id="soegaardsvej-16-9370" data-addr="Søgårdsvej 16, 9370 Hals" data-match="partial">
   <div class="rank">28</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/soegaardsvej-16-9370-hals/sag-8280001117/" target="_blank" rel="noopener">Søgårdsvej 16, 9370 Hals</a></h2>
@@ -1052,10 +1056,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 66/100</span>
+      <span class="t">Samlet 66/100</span>
       <span class="t">Nabohus 0 m</span>
     </p>
     
@@ -1073,7 +1077,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="mosters-vaenge-34-9370" data-addr="Mosters Vænge 34, 9370 Hals">
+<article class="k" data-id="mosters-vaenge-34-9370" data-addr="Mosters Vænge 34, 9370 Hals" data-match="partial">
   <div class="rank">29</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0191-mosters-vaenge-34" target="_blank" rel="noopener">Mosters Vænge 34, 9370 Hals</a></h2>
@@ -1088,10 +1092,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-High">Privatliv: Høj</span>
       <span class="t">Grønt 8/10</span>
-      <span class="t">Score 66/100</span>
+      <span class="t">Samlet 66/100</span>
       <span class="t">Nabohus 2 m</span>
     </p>
     
@@ -1109,7 +1113,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="blaalyngvej-16-9370" data-addr="Blålyngvej 16, Lyngøen, 9370 Hals">
+<article class="k" data-id="blaalyngvej-16-9370" data-addr="Blålyngvej 16, Lyngøen, 9370 Hals" data-match="partial">
   <div class="rank">30</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-1036-blaalyngvej-16-lyngoeen" target="_blank" rel="noopener">Blålyngvej 16, Lyngøen, 9370 Hals</a></h2>
@@ -1124,10 +1128,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       
-      <span class="t">Score 53/100</span>
+      <span class="t">Samlet 53/100</span>
       <span class="t">Nabohus 5 m</span>
     </p>
     
@@ -1145,7 +1149,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="portlandsvej-137-9370" data-addr="Portlandsvej 137, 9370 Hals">
+<article class="k" data-id="portlandsvej-137-9370" data-addr="Portlandsvej 137, 9370 Hals" data-match="partial">
   <div class="rank">31</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/portlandsvej-137-1/93803264/" target="_blank" rel="noopener">Portlandsvej 137, 9370 Hals</a></h2>
@@ -1160,10 +1164,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-Low">Privatliv: Lav</span>
       <span class="t">Grønt 3/10</span>
-      <span class="t">Score 52/100</span>
+      <span class="t">Samlet 52/100</span>
       <span class="t">Nabohus 24 m</span>
     </p>
     <p class="warnbox">⚠ mulig indblik fra naboer — ikke bekraeftet (3/3): Ferielejlighed i feriecenter med fælles, åben plæne og altaner side om side — ingen hæk eller beplantning skærmer af.</p>
@@ -1181,7 +1185,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="nordmarksvej-18-9370" data-addr="Nordmarksvej 18, 9370 Hals">
+<article class="k" data-id="nordmarksvej-18-9370" data-addr="Nordmarksvej 18, 9370 Hals" data-match="partial">
   <div class="rank">32</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/nordmarksvej/n105912/n1059120000198" target="_blank" rel="noopener">Nordmarksvej 18, 9370 Hals</a></h2>
@@ -1196,10 +1200,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 6/10</span>
-      <span class="t">Score 52/100</span>
+      <span class="t">Samlet 52/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
     
@@ -1217,7 +1221,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k" data-id="kimbrervej-6-9370" data-addr="Kimbrervej 6, Koldkær, 9370 Hals">
+<article class="k" data-id="kimbrervej-6-9370" data-addr="Kimbrervej 6, Koldkær, 9370 Hals" data-match="partial">
   <div class="rank">33</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/kimbrervej-6/93804206/" target="_blank" rel="noopener">Kimbrervej 6, Koldkær, 9370 Hals</a></h2>
@@ -1232,10 +1236,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
+      <span class="t v-Average">Score: Middel</span>
       <span class="t p-Medium">Privatliv: Middel</span>
       <span class="t">Grønt 5/10</span>
-      <span class="t">Score 51/100</span>
+      <span class="t">Samlet 51/100</span>
       <span class="t">Nabohus 4 m</span>
     </p>
     
@@ -1341,6 +1345,24 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   });
 
   buildFavs();
+
+  // Filter: vis kun boliger uden afvigelser fra kriterierne.
+  var FKEY='hou-kunfuldmatch';
+  var cb=document.getElementById('onlyfull');
+  function applyFilter(){
+    var on=cb.checked, hidden=0;
+    document.querySelectorAll('#alltitle ~ article.k, article.k').forEach(function(c){
+      if(!c.dataset.match) return;
+      var hide=on && c.dataset.match!=='full';
+      c.style.display=hide?'none':'';
+      if(hide) hidden++;
+    });
+    document.getElementById('hiddencount').textContent=on&&hidden?('('+hidden+' skjult)'):'';
+    try{ localStorage.setItem(FKEY,on?'1':'0') }catch(e){}
+  }
+  try{ cb.checked=localStorage.getItem(FKEY)==='1' }catch(e){}
+  cb.addEventListener('change',applyFilter);
+  applyFilter();
 })();
 </script>
 </body></html>
