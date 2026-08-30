@@ -33,15 +33,37 @@ h2 a:hover{border-color:var(--acc)}
 @media(prefers-color-scheme:dark){.warnbox{background:#2a2113}}
 .note{font-size:.82rem;color:var(--mut);margin:6px 0 4px;font-style:italic}
 .src{font-size:.74rem;color:var(--mut);margin:0}
+.fav{display:flex;gap:8px;align-items:center;margin-top:8px}
+.favbtn,.notebtn,.notesave,.notecancel,#favexport{font:inherit;font-size:.78rem;padding:4px 10px;border-radius:16px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer}
+.favbtn[aria-pressed="true"]{border-color:#c9a227;color:#a8801a;background:#fdf8e8;font-weight:600}
+@media(prefers-color-scheme:dark){.favbtn[aria-pressed="true"]{background:#2b2513;color:#e0be5a}}
+.savedmsg{font-size:.72rem;color:var(--acc)}
+.noteedit{margin-top:8px}
+.noteedit textarea{width:100%;font:inherit;font-size:.85rem;padding:7px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--fg);resize:vertical}
+.noterow{display:flex;gap:6px;margin-top:5px}
+.usernote{font-size:.85rem;background:#fdf8e8;border-left:3px solid #c9a227;padding:6px 10px;border-radius:5px;margin:8px 0 0;white-space:pre-wrap}
+@media(prefers-color-scheme:dark){.usernote{background:#2b2513}}
+.secttl{font-size:1.1rem;margin:26px 0 6px}
+#favsec{margin-top:18px}
+.favhelp{font-size:.76rem;color:var(--mut);margin:4px 0 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.gone-badge{font-size:.72rem;color:#a33;border:1px solid #a33;border-radius:12px;padding:1px 7px;margin-left:6px}
 footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-size:.78rem;color:var(--mut)}
 </style></head>
 <body><div class="wrap">
 <header>
 <h1>Sommerhuse — Hou / Mikkelmark</h1>
-<p class="sub">36 boliger til salg lige nu · under 1.500.000 kr · grund fra 1000 m² · bedste value for money først<br>Opdateret søndag den 30. august 2026 kl. 13.42</p>
+<p class="sub">34 boliger til salg lige nu · under 1.500.000 kr · grund fra 1000 m² · bedste value for money først<br>Opdateret søndag den 30. august 2026 kl. 13.54</p>
 </header>
 <div class="ch none">Ingen ændringer siden i går.</div>
-<article class="k">
+
+<section id="favsec" hidden>
+  <h2 class="secttl">★ Mine favoritter <span id="favcount"></span></h2>
+  <div id="favlist"></div>
+  <p class="favhelp">Favoritter og noter gemmes kun på denne telefon. De bliver stående når listen opdateres.
+  <button id="favexport" type="button">Kopiér som tekst</button></p>
+</section>
+<h2 class="secttl" id="alltitle">Alle boliger</h2>
+<article class="k" data-id="havvejen-17-9370" data-addr="Havvejen 17, Hou, 9370 Hals">
   <div class="rank">1</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/havvejen-17/93803710/" target="_blank" rel="noopener">Havvejen 17, Hou, 9370 Hals</a></h2>
@@ -63,9 +85,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 24 fotos:</b> Tæt skovbryn af høje fyrretræer og buskads hele vejen rundt om den store naturgrund</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="jagtvej-7-9370" data-addr="Jagtvej 7, 9370 Hals">
   <div class="rank">2</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/jagtvej-7-9370-hals/sag-8280001060/" target="_blank" rel="noopener">Jagtvej 7, 9370 Hals</a></h2>
@@ -87,9 +119,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 6 fotos:</b> Tæt bevoksning af høje løvtræer, nåletræer og buske hele vejen rundt om grunden</p>
     <p class="src">Kilde: home · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="skovsgaardsvej-64-9370" data-addr="Skovsgårdsvej 64, 9370 Hals">
   <div class="rank">3</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/skovsgaardsvej-64/93804155/" target="_blank" rel="noopener">Skovsgårdsvej 64, 9370 Hals</a></h2>
@@ -111,9 +153,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 15 fotos:</b> Tæt nåle- og løvskov langs grundens kanter hele vejen rundt; klippet plæne i midten</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="rasmus-jensens-vej-39-9370" data-addr="Rasmus Jensens Vej 39, Hou, 9370 Hals">
   <div class="rank">4</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-39/93804189/" target="_blank" rel="noopener">Rasmus Jensens Vej 39, Hou, 9370 Hals</a></h2>
@@ -135,9 +187,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 16 fotos, enighed 3/3:</b> Træer og krat i skel mod bagside/sider, men mod marken er der kun lavt hegn og fri udsigt</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="hou-vest-57-9370" data-addr="Hou Vest 57, Hou, 9370 Hals">
   <div class="rank">5</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/hou-vest-57/93803877/" target="_blank" rel="noopener">Hou Vest 57, Hou, 9370 Hals</a></h2>
@@ -159,9 +221,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 28 fotos:</b> Tæt skovbryn og høje træer/buske hele vejen rundt om grunden; åben plæne midt på, men lodret skærmning i alle retninger</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="svanevej-3-9370" data-addr="Svanevej 3, Hou, 9370 Hals">
   <div class="rank">6</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svanevej-3/93804107/" target="_blank" rel="noopener">Svanevej 3, Hou, 9370 Hals</a></h2>
@@ -183,9 +255,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 24 fotos:</b> Tætte løvtræer og krat hele vejen rundt om grunden, samt træhegn/læskærm ved terrassen</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="roedgranvej-21-9370" data-addr="Rødgranvej 21, Hou, 9370 Hals">
   <div class="rank">7</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0063-roedgranvej-21-hou" target="_blank" rel="noopener">Rødgranvej 21, Hou, 9370 Hals</a></h2>
@@ -207,9 +289,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 13 fotos:</b> Fra luften ses randbeplantning med træer/buske mod vej og skel, men åbne græspartier midt på; kan ikke vurderes i øjenhøjde</p>
     <p class="src">Kilde: realmaeglerne · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="roedgranvej-3-9370" data-addr="Rødgranvej 3, Hou, 9370 Hals">
   <div class="rank">8</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/roedgranvej-3/93803393/" target="_blank" rel="noopener">Rødgranvej 3, Hou, 9370 Hals</a></h2>
@@ -231,9 +323,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 22 fotos, enighed 2/3:</b> Høje nåletræer og buskads i skel næsten hele vejen rundt, træhegn ved terrassen; plænen selv er åben</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="lyngtoftegaard-3-9370" data-addr="Lyngtoftegård 3, Hou, 9370 Hals">
   <div class="rank">9</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/lyngtoftegaard-3/93803880/" target="_blank" rel="noopener">Lyngtoftegård 3, Hou, 9370 Hals</a></h2>
@@ -255,9 +357,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 19 fotos:</b> Tæt bælte af egetræer, fyr, buske og selvsået krat hele vejen rundt om grunden; desuden trælamel-læskærm ved terrassen</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="rasmus-jensens-vej-4-9370" data-addr="Rasmus Jensens Vej 4, Hou, 9370 Hals">
   <div class="rank">10</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-4/93804218/" target="_blank" rel="noopener">Rasmus Jensens Vej 4, Hou, 9370 Hals</a></h2>
@@ -279,9 +391,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 17 fotos:</b> Tæt bælte af fyr og gran hele vejen rundt om grunden, suppleret af høje mørke plankeskærme ved terrasserne</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="nordvestvej-4-9370" data-addr="Nordvestvej 4, 9370 Hals">
   <div class="rank">11</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/nordvestvej-4-9370-hals/sag-8280001084/" target="_blank" rel="noopener">Nordvestvej 4, 9370 Hals</a></h2>
@@ -303,9 +425,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 6 fotos:</b> Højt rødt plankeværk om terrassen samt tæt bælte af nåletræer og løvtræer langs skel; åbent naturareal mod terrassesiden</p>
     <p class="src">Kilde: home · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="elsdyrvej-3-9370" data-addr="Elsdyrvej 3, Mikkelmark, 9370 Hals">
   <div class="rank">12</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/elsdyrvej-3/93804344/" target="_blank" rel="noopener">Elsdyrvej 3, Mikkelmark, 9370 Hals</a></h2>
@@ -327,9 +459,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 14 fotos:</b> Høje træer, tætte buske og hæk hele vejen rundt om den store græsplæne; egen carport/skur lukker mod vest</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="dyreengen-5-9370" data-addr="Dyreengen 5, Hou, 9370 Hals">
   <div class="rank">13</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/dyreengen-5/93804205/" target="_blank" rel="noopener">Dyreengen 5, Hou, 9370 Hals</a></h2>
@@ -351,9 +493,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 14 fotos:</b> Høje fyrretræer og tæt krat hele vejen rundt, plankeværk og pergola om terrasserne</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="maagevej-1-9370" data-addr="Mågevej 1, Hou, 9370 Hals">
   <div class="rank">14</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/maagevej/n105085/n1050850000189" target="_blank" rel="noopener">Mågevej 1, Hou, 9370 Hals</a></h2>
@@ -375,9 +527,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 30 fotos:</b> Høje birke- og løvtræer, hegn og store rhododendronbuske hele vejen rundt om grunden</p>
     <p class="src">Kilde: nybolig · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="svingelen-6-9370" data-addr="Svingelen 6, 9370 Hals">
   <div class="rank">15</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svingelen-6/93803721/" target="_blank" rel="noopener">Svingelen 6, 9370 Hals</a></h2>
@@ -399,9 +561,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 26 fotos, enighed 3/3:</b> Tæt trærand af fyr og løvtræer samt hæk i skel hele vejen rundt; selve haven er dog en stor åben, klippet plæne med grusindkørsel mod vejen</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="rasmus-jensens-vej-8-9370" data-addr="Rasmus Jensens Vej 8, Hou, 9370 Hals">
   <div class="rank">16</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-8/93803638/" target="_blank" rel="noopener">Rasmus Jensens Vej 8, Hou, 9370 Hals</a></h2>
@@ -423,9 +595,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 26 fotos:</b> Tæt nåle- og løvskov hele vejen rundt om grunden, plus høje hegnsfag ved terrassen</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="koldkaervej-17-9370" data-addr="Koldkærvej 17, Koldkær, 9370 Hals">
   <div class="rank">17</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/koldkaervej-17-9370-hals/sag-8280001053/" target="_blank" rel="noopener">Koldkærvej 17, Koldkær, 9370 Hals</a></h2>
@@ -447,9 +629,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 6 fotos:</b> Luftfoto viser tæt skovbryn og buskads mod nord, vest og syd samt plankeværk mod øst; ingen billeder i øjenhøjde til at bekræfte afskærmningen</p>
     <p class="src">Kilde: home · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="vestvej-30-9370" data-addr="Vestvej 30, 9370 Hals">
   <div class="rank">18</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/vestvej-30/93804248/" target="_blank" rel="noopener">Vestvej 30, 9370 Hals</a></h2>
@@ -471,9 +663,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 23 fotos:</b> Tætte rækker af gran, birk og løvbuske langs alle skel, suppleret af trådhegn og terrassens træværn</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="svingelen-17-9370" data-addr="Svingelen 17, 9370 Hals">
   <div class="rank">19</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0351-svingelen-17" target="_blank" rel="noopener">Svingelen 17, 9370 Hals</a></h2>
@@ -495,9 +697,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="palsgaardsmark-18-9370" data-addr="Palsgårdsmark 18, Hou, 9370 Hals">
   <div class="rank">20</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-18/93803971/" target="_blank" rel="noopener">Palsgårdsmark 18, Hou, 9370 Hals</a></h2>
@@ -519,9 +731,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 24 fotos, enighed 2/3:</b> Høje graner og løvtræer på tre sider, hegn og krat mod skel; kun grusindkørslen/forarealet står forholdsvis åbent</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="planetvej-3-9370" data-addr="Planetvej 3, Gl Bisnap, 9370 Hals">
   <div class="rank">21</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/planetvej-3-9370-hals/sag-8280000931/" target="_blank" rel="noopener">Planetvej 3, Gl Bisnap, 9370 Hals</a></h2>
@@ -543,9 +765,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 6 fotos:</b> Luftfoto antyder træbælte mod nord/øst, men den store plæne virker åben; ingen øjenhøjdefotos til at vurdere afskærmning</p>
     <p class="src">Kilde: home · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="mosters-vaenge-22-9370" data-addr="Mosters Vænge 22, 9370 Hals">
   <div class="rank">22</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/mostersvaenge/n105912/n1059120000578" target="_blank" rel="noopener">Mosters Vænge 22, 9370 Hals</a></h2>
@@ -567,9 +799,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 30 fotos, enighed 3/3:</b> Høje grantræer og buske på bag- og sideskel; forsiden mod vej lidt mere åben med lav hæk</p>
     <p class="src">Kilde: nybolig · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="fasanvej-4-9370" data-addr="Fasanvej 4, Lyngøen, 9370 Hals">
   <div class="rank">23</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/fasanvej-4-9370-hals/sag-8280001079/" target="_blank" rel="noopener">Fasanvej 4, Lyngøen, 9370 Hals</a></h2>
@@ -591,9 +833,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 6 fotos:</b> Stort rhododendronbed/hæk mod vest og højt træhegn mod øst; åben klippet plæne mod syd</p>
     <p class="src">Kilde: home · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="mogensig-16-9370" data-addr="Mogensig 16, Hou, 9370 Hals">
   <div class="rank">24</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/mogensig-16-9370-hals/sag-8280001099/" target="_blank" rel="noopener">Mogensig 16, Hou, 9370 Hals</a></h2>
@@ -615,9 +867,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
     <p class="note"><b>Set på 6 fotos:</b> Tæt, høj hæk hele vejen rundt samt sort trähegn mod vej; store træer i skel mod øst</p>
     <p class="src">Kilde: home · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="hybenvej-11-9370" data-addr="Hybenvej 11, Hou, 9370 Hals">
   <div class="rank">25</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0340-hybenvej-11" target="_blank" rel="noopener">Hybenvej 11, Hou, 9370 Hals</a></h2>
@@ -639,9 +901,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 12 fotos:</b> Tæt skov- og kratbevoksning omkring hele grunden; egne bygninger og overdækket terrasse lukker yderligere af</p>
     <p class="src">Kilde: realmaeglerne · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="portlandsvej-97c-9370" data-addr="Portlandsvej 97C, 9370 Hals">
   <div class="rank">26</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0328-portlandsvej-97c" target="_blank" rel="noopener">Portlandsvej 97C, 9370 Hals</a></h2>
@@ -663,9 +935,19 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="vestvej-41-9370" data-addr="Vestvej 41, 9370 Hals">
   <div class="rank">27</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/vestvej/n105912/n1059120000575" target="_blank" rel="noopener">Vestvej 41, 9370 Hals</a></h2>
@@ -687,34 +969,20 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 30 fotos:</b> Tæt bælte af høje løv- og nåletræer samt krat hele vejen rundt om grunden; desuden lamelhegn ved terrassen</p>
     <p class="src">Kilde: nybolig · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
+<article class="k" data-id="kongeparken-17-9370" data-addr="Kongeparken 17, Koldkær, 9370 Hals">
   <div class="rank">28</div>
-  <div class="body">
-    <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/portlandsvej-143-1/93803963/" target="_blank" rel="noopener">Portlandsvej 143, 9370 Hals</a></h2>
-    <p class="price">695.000 kr.</p>
-    <ul class="facts">
-      <li><b>Grund</b> 71.893 m²</li>
-      <li><b>Bolig</b> 53 m²</li>
-      <li><b>Område</b> Koldkaer</li>
-      <li><b>Ejerudgift</b> 2.073 kr./md.</li>
-      <li><b>Byggeår</b> 1990</li>
-    </ul>
-    <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      
-      <span class="t">Score 74/100</span>
-      <span class="t">Nabohus 24 m</span>
-    </p>
-    
-    
-    <p class="src">Kilde: edc · første gang set </p>
-  </div>
-</article>
-<article class="k">
-  <div class="rank">29</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/kongeparken/n105912/n1059120000303" target="_blank" rel="noopener">Kongeparken 17, Koldkær, 9370 Hals</a></h2>
     <p class="price">998.000 kr.</p>
@@ -735,10 +1003,20 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 29 fotos:</b> Høje hvide murede gårdhavevægge hele vejen rundt om terrassen plus tæt gran- og løvskov på alle sider af grunden</p>
     <p class="src">Kilde: nybolig · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
-  <div class="rank">30</div>
+<article class="k" data-id="soegaardsvej-16-9370" data-addr="Søgårdsvej 16, 9370 Hals">
+  <div class="rank">29</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/soegaardsvej-16-9370-hals/sag-8280001117/" target="_blank" rel="noopener">Søgårdsvej 16, 9370 Hals</a></h2>
     <p class="price">940.000 kr.</p>
@@ -759,10 +1037,20 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 6 fotos:</b> Høje nåletræer og løvtræer hele vejen rundt, stor rododendron og hæk mod syd/vest</p>
     <p class="src">Kilde: home · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
-  <div class="rank">31</div>
+<article class="k" data-id="mosters-vaenge-34-9370" data-addr="Mosters Vænge 34, 9370 Hals">
+  <div class="rank">30</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0191-mosters-vaenge-34" target="_blank" rel="noopener">Mosters Vænge 34, 9370 Hals</a></h2>
     <p class="price">995.000 kr.</p>
@@ -783,34 +1071,20 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 16 fotos:</b> Tætte nåletræer og løvtræer i skel hele vejen rundt, suppleret af sorte trähegn omkring terrasser</p>
     <p class="src">Kilde: realmaeglerne · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
-  <div class="rank">32</div>
-  <div class="body">
-    <h2><a href="https://www.nybolig.dk/fritidshus/9370/lindeparken/n105912/n1059120000233" target="_blank" rel="noopener">Lindeparken 8, 9370 Hals</a></h2>
-    <p class="price">890.000 kr.</p>
-    <ul class="facts">
-      <li><b>Grund</b> 1.097 m² <span class="warn">under ønsket</span></li>
-      <li><b>Bolig</b> 63 m²</li>
-      <li><b>Område</b> Torndrup Strand</li>
-      <li><b>Ejerudgift</b> 1.085 kr./md.</li>
-      <li><b>Byggeår</b> 1986</li>
-    </ul>
-    <p class="tags">
-      <span class="t v-Average">Value: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      
-      <span class="t">Score 53/100</span>
-      <span class="t">Nabohus 3 m</span>
-    </p>
-    
-    
-    <p class="src">Kilde: nybolig · første gang set </p>
-  </div>
-</article>
-<article class="k">
-  <div class="rank">33</div>
+<article class="k" data-id="blaalyngvej-16-9370" data-addr="Blålyngvej 16, Lyngøen, 9370 Hals">
+  <div class="rank">31</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-1036-blaalyngvej-16-lyngoeen" target="_blank" rel="noopener">Blålyngvej 16, Lyngøen, 9370 Hals</a></h2>
     <p class="price">998.000 kr.</p>
@@ -831,10 +1105,20 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
-  <div class="rank">34</div>
+<article class="k" data-id="portlandsvej-137-9370" data-addr="Portlandsvej 137, 9370 Hals">
+  <div class="rank">32</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/portlandsvej-137-1/93803264/" target="_blank" rel="noopener">Portlandsvej 137, 9370 Hals</a></h2>
     <p class="price">695.000 kr.</p>
@@ -855,10 +1139,20 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <p class="warnbox">⚠ mulig indblik fra naboer — ikke bekraeftet (3/3): Ferielejlighed i feriecenter med fælles, åben plæne og altaner side om side — ingen hæk eller beplantning skærmer af.</p>
     <p class="note"><b>Set på 30 fotos, enighed 3/3:</b> Stort set ingen lodret afskærmning: altan og terrasse vender ud mod klippet fællesplæne; kun spredte fyrretræer og krat i periferien</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
-  <div class="rank">35</div>
+<article class="k" data-id="nordmarksvej-18-9370" data-addr="Nordmarksvej 18, 9370 Hals">
+  <div class="rank">33</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/nordmarksvej/n105912/n1059120000198" target="_blank" rel="noopener">Nordmarksvej 18, 9370 Hals</a></h2>
     <p class="price">799.000 kr.</p>
@@ -879,10 +1173,20 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 30 fotos, enighed 3/3:</b> Højt sort plankeværk om terrassen, buske og skovbryn i skel; løvtræer er bladløse på vinterfotos, så nordsiden er delvist åben</p>
     <p class="src">Kilde: nybolig · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
-<article class="k">
-  <div class="rank">36</div>
+<article class="k" data-id="kimbrervej-6-9370" data-addr="Kimbrervej 6, Koldkær, 9370 Hals">
+  <div class="rank">34</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/kimbrervej-6/93804206/" target="_blank" rel="noopener">Kimbrervej 6, Koldkær, 9370 Hals</a></h2>
     <p class="price">1.198.000 kr.</p>
@@ -903,6 +1207,16 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="note"><b>Set på 16 fotos, enighed 3/3:</b> Klippede hække, træhegn og højt træbælte mod bagsiden; hækkene er dog relativt lave og plænen åben</p>
     <p class="src">Kilde: edc · første gang set </p>
+    <div class="fav">
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <span class="savedmsg" hidden>gemt</span>
+    </div>
+    <div class="noteedit" hidden>
+      <textarea rows="2" placeholder="Din note om dette hus…"></textarea>
+      <div class="noterow"><button class="notesave" type="button">Gem</button><button class="notecancel" type="button">Fortryd</button></div>
+    </div>
+    <p class="usernote" hidden></p>
   </div>
 </article>
 <footer>
@@ -910,4 +1224,89 @@ Kilder: edc, nybolig, estate, home, danbolig, realmaeglerne.
 Boliger med value <i>Weak</i>, grund under 1000 m² eller synlige naboer fra haven vises ikke.
 Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet ud fra mæglerens fotos.
 </footer>
-</div></body></html>
+</div>
+<script>
+(function(){
+  var KEY='hou-favoritter-v1';
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||'{}') }catch(e){ return {} } }
+  function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)) }catch(e){} }
+  var data=load();
+
+  function flash(el){ var m=el.querySelector('.savedmsg'); if(!m)return; m.hidden=false; setTimeout(function(){m.hidden=true},1400) }
+
+  function paint(card){
+    var id=card.dataset.id, rec=data[id];
+    var btn=card.querySelector('.favbtn'), note=card.querySelector('.usernote');
+    var isFav=!!(rec&&rec.fav);
+    btn.setAttribute('aria-pressed',isFav?'true':'false');
+    btn.textContent=(isFav?'★':'☆')+' Favorit';
+    if(rec&&rec.note){ note.textContent=rec.note; note.hidden=false } else { note.hidden=true }
+  }
+
+  function rec(id){ if(!data[id]) data[id]={fav:false,note:''}; return data[id] }
+
+  document.querySelectorAll('article.k').forEach(function(card){
+    var id=card.dataset.id;
+    paint(card);
+    card.querySelector('.favbtn').addEventListener('click',function(){
+      var r=rec(id); r.fav=!r.fav; r.addr=card.dataset.addr;
+      if(!r.fav&&!r.note) delete data[id];
+      save(data); paint(card); flash(card); buildFavs();
+    });
+    var editor=card.querySelector('.noteedit'), ta=editor.querySelector('textarea');
+    card.querySelector('.notebtn').addEventListener('click',function(){
+      ta.value=(data[id]&&data[id].note)||''; editor.hidden=!editor.hidden; if(!editor.hidden) ta.focus();
+    });
+    editor.querySelector('.notesave').addEventListener('click',function(){
+      var r=rec(id); r.note=ta.value.trim(); r.addr=card.dataset.addr;
+      if(r.note) r.fav=true;
+      if(!r.fav&&!r.note) delete data[id];
+      save(data); editor.hidden=true; paint(card); flash(card); buildFavs();
+    });
+    editor.querySelector('.notecancel').addEventListener('click',function(){ editor.hidden=true });
+  });
+
+  function buildFavs(){
+    var sec=document.getElementById('favsec'), list=document.getElementById('favlist');
+    var ids=Object.keys(data).filter(function(k){ return data[k].fav||data[k].note });
+    list.innerHTML='';
+    if(!ids.length){ sec.hidden=true; return }
+    sec.hidden=false;
+    document.getElementById('favcount').textContent='('+ids.length+')';
+    ids.forEach(function(id){
+      var src=document.querySelector('article.k[data-id="'+id+'"]');
+      var d=document.createElement('div');
+      d.className='k';
+      if(src){
+        var addr=src.querySelector('h2').innerHTML;
+        var price=src.querySelector('.price').textContent;
+        var facts=src.querySelector('.facts').outerHTML;
+        d.innerHTML='<div class="body"><h2>'+addr+'</h2><p class="price">'+price+'</p>'+facts+
+          (data[id].note?'<p class="usernote">'+data[id].note.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</p>':'')+'</div>';
+      } else {
+        d.innerHTML='<div class="body"><h2>'+(data[id].addr||id)+'<span class="gone-badge">ikke på listen længere</span></h2>'+
+          (data[id].note?'<p class="usernote">'+data[id].note.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</p>':'')+'</div>';
+      }
+      list.appendChild(d);
+    });
+  }
+
+  document.getElementById('favexport').addEventListener('click',function(){
+    var NL=String.fromCharCode(10);
+    var ids=Object.keys(data).filter(function(k){ return data[k].fav||data[k].note });
+    var lines=[];
+    ids.forEach(function(id){
+      lines.push('- '+(data[id].addr||id));
+      if(data[id].note) lines.push('  Note: '+data[id].note);
+    });
+    var txt=lines.join(NL);
+    var t=document.createElement('textarea'); t.value=txt||'ingen favoritter'; document.body.appendChild(t);
+    t.select(); try{ document.execCommand('copy') }catch(e){}
+    document.body.removeChild(t);
+    this.textContent='kopieret ✓'; var b=this; setTimeout(function(){ b.textContent='Kopiér som tekst' },1600);
+  });
+
+  buildFavs();
+})();
+</script>
+</body></html>
