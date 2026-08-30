@@ -37,7 +37,12 @@ h2 a:hover{border-color:var(--acc)}
 .note{font-size:.82rem;color:var(--mut);margin:6px 0 4px;font-style:italic}
 .src{font-size:.74rem;color:var(--mut);margin:0}
 .fav{display:flex;gap:8px;align-items:center;margin-top:8px}
-.favbtn,.notebtn,.notesave,.notecancel,#favexport{font:inherit;font-size:.78rem;padding:4px 10px;border-radius:16px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer}
+.favbtn,.notebtn,.seenbtn,.notesave,.notecancel,#favexport,#seentoggle{font:inherit;font-size:.78rem;padding:4px 10px;border-radius:16px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer}
+.seenbtn[aria-pressed="true"]{border-color:var(--acc);color:var(--acc);background:#eef6f0;font-weight:600}
+@media(prefers-color-scheme:dark){.seenbtn[aria-pressed="true"]{background:#1c2a22}}
+.k.seen{opacity:.45}
+.listctl{display:flex;gap:8px 14px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.listctl .matchfilter{margin:0}
 .favbtn[aria-pressed="true"]{border-color:#c9a227;color:#a8801a;background:#fdf8e8;font-weight:600}
 @media(prefers-color-scheme:dark){.favbtn[aria-pressed="true"]{background:#2b2513;color:#e0be5a}}
 .savedmsg{font-size:.72rem;color:var(--acc)}
@@ -72,12 +77,12 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <body><div class="wrap">
 <header>
 <h1>Sommerhuse — Hou / Mikkelmark</h1>
-<p class="sub">34 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret søndag den 30. august 2026 kl. 19.01</p>
+<p class="sub">34 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret søndag den 30. august 2026 kl. 19.17</p>
 </header>
 <div class="ch none">Ingen ændringer siden i går.</div>
 
 <section id="favsec" hidden>
-  <h2 class="secttl">★ Mine favoritter <span id="favcount"></span></h2>
+  <h2 class="secttl">♥ Mine favoritter <span id="favcount"></span></h2>
   <div id="favlist"></div>
   <p class="favhelp">Favoritter og noter gemmes kun på denne telefon. De bliver stående når listen opdateres.
   <button id="favexport" type="button">Kopiér som tekst</button></p>
@@ -96,7 +101,10 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   <div class="fareas" id="f-areas"></div>
   <div class="frow"><span id="hiddencount"></span> <button type="button" id="f-reset">Nulstil til mine kriterier</button></div>
 </details>
+<div class="listctl">
 <label class="matchfilter"><input type="checkbox" id="onlyfull"> Vis kun boliger der opfylder alle kriterier 100 %</label>
+<button type="button" id="seentoggle" hidden></button>
+</div>
 <article class="k" data-id="havvejen-17-9370" data-addr="Havvejen 17, Hou, 9370 Hals" data-match="full"
   data-price="1480000" data-plot="3399" data-living="145" data-cost="1531" data-area="Hou Syd">
   <div class="rank">1</div>
@@ -125,8 +133,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/havvejen-17/93803710/" target="_blank" rel="noopener"><img class="thumb" src="img/havvejen-17-9370.jpg" loading="lazy" alt="Foto: Havvejen 17, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -164,8 +173,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://home.dk/salg/sommerhuse/jagtvej-7-9370-hals/sag-8280001060/" target="_blank" rel="noopener"><img class="thumb" src="img/jagtvej-7-9370.jpg" loading="lazy" alt="Foto: Jagtvej 7, 9370 Hals"></a>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -203,8 +213,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/skovsgaardsvej-64/93804155/" target="_blank" rel="noopener"><img class="thumb" src="img/skovsgaardsvej-64-9370.jpg" loading="lazy" alt="Foto: Skovsgårdsvej 64, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -242,8 +253,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-39/93804189/" target="_blank" rel="noopener"><img class="thumb" src="img/rasmus-jensens-vej-39-9370.jpg" loading="lazy" alt="Foto: Rasmus Jensens Vej 39, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -281,8 +293,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/hou-vest-57/93803877/" target="_blank" rel="noopener"><img class="thumb" src="img/hou-vest-57-9370.jpg" loading="lazy" alt="Foto: Hou Vest 57, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -320,8 +333,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svanevej-3/93804107/" target="_blank" rel="noopener"><img class="thumb" src="img/svanevej-3-9370.jpg" loading="lazy" alt="Foto: Svanevej 3, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -359,8 +373,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -398,8 +413,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/roedgranvej-3/93803393/" target="_blank" rel="noopener"><img class="thumb" src="img/roedgranvej-3-9370.jpg" loading="lazy" alt="Foto: Rødgranvej 3, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -437,8 +453,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/lyngtoftegaard-3/93803880/" target="_blank" rel="noopener"><img class="thumb" src="img/lyngtoftegaard-3-9370.jpg" loading="lazy" alt="Foto: Lyngtoftegård 3, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -476,8 +493,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-4/93804218/" target="_blank" rel="noopener"><img class="thumb" src="img/rasmus-jensens-vej-4-9370.jpg" loading="lazy" alt="Foto: Rasmus Jensens Vej 4, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -515,8 +533,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://home.dk/salg/sommerhuse/nordvestvej-4-9370-hals/sag-8280001084/" target="_blank" rel="noopener"><img class="thumb" src="img/nordvestvej-4-9370.jpg" loading="lazy" alt="Foto: Nordvestvej 4, 9370 Hals"></a>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -554,8 +573,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/dyreengen-5/93804205/" target="_blank" rel="noopener"><img class="thumb" src="img/dyreengen-5-9370.jpg" loading="lazy" alt="Foto: Dyreengen 5, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -593,8 +613,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.nybolig.dk/fritidshus/9370/maagevej/n105085/n1050850000189" target="_blank" rel="noopener"><img class="thumb" src="img/maagevej-1-9370.jpg" loading="lazy" alt="Foto: Mågevej 1, Hou, 9370 Hals"></a>
     <p class="src">Kilde: nybolig · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -632,8 +653,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svingelen-6/93803721/" target="_blank" rel="noopener"><img class="thumb" src="img/svingelen-6-9370.jpg" loading="lazy" alt="Foto: Svingelen 6, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -671,8 +693,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-8/93803638/" target="_blank" rel="noopener"><img class="thumb" src="img/rasmus-jensens-vej-8-9370.jpg" loading="lazy" alt="Foto: Rasmus Jensens Vej 8, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -710,8 +733,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://home.dk/salg/sommerhuse/koldkaervej-17-9370-hals/sag-8280001053/" target="_blank" rel="noopener"><img class="thumb" src="img/koldkaervej-17-9370.jpg" loading="lazy" alt="Foto: Koldkærvej 17, Koldkær, 9370 Hals"></a>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -749,8 +773,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/vestvej-30/93804248/" target="_blank" rel="noopener"><img class="thumb" src="img/vestvej-30-9370.jpg" loading="lazy" alt="Foto: Vestvej 30, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -788,8 +813,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -827,8 +853,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://home.dk/salg/sommerhuse/planetvej-3-9370-hals/sag-8280000931/" target="_blank" rel="noopener"><img class="thumb" src="img/planetvej-3-9370.jpg" loading="lazy" alt="Foto: Planetvej 3, Gl Bisnap, 9370 Hals"></a>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -866,8 +893,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.nybolig.dk/fritidshus/9370/mostersvaenge/n105912/n1059120000578" target="_blank" rel="noopener"><img class="thumb" src="img/mosters-vaenge-22-9370.jpg" loading="lazy" alt="Foto: Mosters Vænge 22, 9370 Hals"></a>
     <p class="src">Kilde: nybolig · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -905,8 +933,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-18/93803971/" target="_blank" rel="noopener"><img class="thumb" src="img/palsgaardsmark-18-9370.jpg" loading="lazy" alt="Foto: Palsgårdsmark 18, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -944,8 +973,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://home.dk/salg/sommerhuse/fasanvej-4-9370-hals/sag-8280001079/" target="_blank" rel="noopener"><img class="thumb" src="img/fasanvej-4-9370.jpg" loading="lazy" alt="Foto: Fasanvej 4, Lyngøen, 9370 Hals"></a>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -983,8 +1013,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://home.dk/salg/sommerhuse/mogensig-16-9370-hals/sag-8280001099/" target="_blank" rel="noopener"><img class="thumb" src="img/mogensig-16-9370.jpg" loading="lazy" alt="Foto: Mogensig 16, Hou, 9370 Hals"></a>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1022,8 +1053,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1061,8 +1093,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.nybolig.dk/fritidshus/9370/vestvej/n105912/n1059120000575" target="_blank" rel="noopener"><img class="thumb" src="img/vestvej-41-9370.jpg" loading="lazy" alt="Foto: Vestvej 41, 9370 Hals"></a>
     <p class="src">Kilde: nybolig · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1100,8 +1133,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1139,8 +1173,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.nybolig.dk/fritidshus/9370/kongeparken/n105912/n1059120000303" target="_blank" rel="noopener"><img class="thumb" src="img/kongeparken-17-9370.jpg" loading="lazy" alt="Foto: Kongeparken 17, Koldkær, 9370 Hals"></a>
     <p class="src">Kilde: nybolig · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1178,8 +1213,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://home.dk/salg/sommerhuse/soegaardsvej-16-9370-hals/sag-8280001117/" target="_blank" rel="noopener"><img class="thumb" src="img/soegaardsvej-16-9370.jpg" loading="lazy" alt="Foto: Søgårdsvej 16, 9370 Hals"></a>
     <p class="src">Kilde: home · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1217,8 +1253,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1256,8 +1293,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-12/93803909/" target="_blank" rel="noopener"><img class="thumb" src="img/palsgaardsmark-12-9370.jpg" loading="lazy" alt="Foto: Palsgårdsmark 12, Hou, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1295,8 +1333,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/kimbrervej-6/93804206/" target="_blank" rel="noopener"><img class="thumb" src="img/kimbrervej-6-9370.jpg" loading="lazy" alt="Foto: Kimbrervej 6, Koldkær, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1334,8 +1373,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/portlandsvej-137-1/93803264/" target="_blank" rel="noopener"><img class="thumb" src="img/portlandsvej-137-9370.jpg" loading="lazy" alt="Foto: Portlandsvej 137, 9370 Hals"></a>
     <p class="src">Kilde: edc · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1373,8 +1413,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="https://www.nybolig.dk/fritidshus/9370/nordmarksvej/n105912/n1059120000198" target="_blank" rel="noopener"><img class="thumb" src="img/nordmarksvej-18-9370.jpg" loading="lazy" alt="Foto: Nordmarksvej 18, 9370 Hals"></a>
     <p class="src">Kilde: nybolig · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1412,8 +1453,9 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     
     <p class="src">Kilde: realmaeglerne · første gang set </p>
     <div class="fav">
-      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">☆ Favorit</button>
+      <button class="favbtn" type="button" aria-pressed="false" title="Marker som favorit">♡ Favorit</button>
       <button class="notebtn" type="button" title="Skriv en note">✎ Note</button>
+      <button class="seenbtn" type="button" aria-pressed="false" title="Marker som set">✓ Set</button>
       <span class="savedmsg" hidden>gemt</span>
     </div>
     <div class="noteedit" hidden>
@@ -1436,6 +1478,28 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)) }catch(e){} }
   var data=load();
 
+  // Sete boliger - gemmes kun paa denne telefon.
+  var SKEY='hou-set-v1', SVKEY='hou-vis-sete-v1';
+  function loadS(){ try{ return JSON.parse(localStorage.getItem(SKEY)||'{}') }catch(e){ return {} } }
+  function saveS(d){ try{ localStorage.setItem(SKEY,JSON.stringify(d)) }catch(e){} }
+  var seen=loadS();
+  var showSeen=false; try{ showSeen=localStorage.getItem(SVKEY)==='1' }catch(e){}
+  // Boliger der allerede var set ved sideindlaesning skjules; boliger sat i DENNE
+  // visning bliver staaende nedtonet, saa listen ikke hopper.
+  var seenAtLoad={}; for(var sk in seen) seenAtLoad[sk]=true;
+
+  function paintSeen(card){
+    var is=!!seen[card.dataset.id];
+    card.querySelector('.seenbtn').setAttribute('aria-pressed',is?'true':'false');
+    card.classList.toggle('seen',is);
+  }
+  function markSeen(card){
+    var id=card.dataset.id;
+    if(seen[id]) return;
+    seen[id]={addr:card.dataset.addr,ts:new Date().toISOString()};
+    saveS(seen); paintSeen(card); apply();
+  }
+
   function flash(el){ var m=el.querySelector('.savedmsg'); if(!m)return; m.hidden=false; setTimeout(function(){m.hidden=true},1400) }
 
   function paint(card){
@@ -1443,7 +1507,7 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
     var btn=card.querySelector('.favbtn'), note=card.querySelector('.usernote');
     var isFav=!!(rec&&rec.fav);
     btn.setAttribute('aria-pressed',isFav?'true':'false');
-    btn.textContent=(isFav?'★':'☆')+' Favorit';
+    btn.textContent=(isFav?'♥':'♡')+' Favorit';
     if(rec&&rec.note){ note.textContent=rec.note; note.hidden=false } else { note.hidden=true }
   }
 
@@ -1452,6 +1516,17 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   document.querySelectorAll('article.k').forEach(function(card){
     var id=card.dataset.id;
     paint(card);
+    paintSeen(card);
+    card.querySelector('.seenbtn').addEventListener('click',function(){
+      if(seen[id]){ delete seen[id]; delete seenAtLoad[id]; }
+      else seen[id]={addr:card.dataset.addr,ts:new Date().toISOString()};
+      saveS(seen); paintSeen(card); apply();
+    });
+    // Klik paa titel eller foto (aabner maeglerens annonce) markerer automatisk som set.
+    var seenLinks=[].slice.call(card.querySelectorAll('h2 a'));
+    var thumbEl=card.querySelector('img.thumb');
+    if(thumbEl&&thumbEl.closest('a')) seenLinks.push(thumbEl.closest('a'));
+    seenLinks.forEach(function(a){ a.addEventListener('click',function(){ markSeen(card) }) });
     card.querySelector('.favbtn').addEventListener('click',function(){
       var r=rec(id); r.fav=!r.fav; r.addr=card.dataset.addr;
       if(!r.fav&&!r.note) delete data[id];
@@ -1546,7 +1621,7 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
        cost:num(el.cost.value),tol:num(el.tol.value)||0,onlyfull:el.onlyfull.checked,
        areas:[].slice.call(areaBox.querySelectorAll('input:checked')).map(function(c){return c.value})};
     el.tolout.textContent=F.tol+' %';
-    var t=F.tol/100, hidden=0;
+    var t=F.tol/100, hidden=0, hiddenSeen=0;
     cards.forEach(function(c){
       var price=num(c.dataset.price),plot=num(c.dataset.plot),living=num(c.dataset.living),cost=num(c.dataset.cost);
       var show=true;
@@ -1556,14 +1631,27 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
       if(show&&F.living!=null&&living!=null&&living<F.living*(1-(F.onlyfull?0:t))) show=false;
       if(show&&F.cost!=null&&cost!=null&&cost>F.cost*(1+(F.onlyfull?0:t))) show=false;
       if(show&&F.areas&&F.areas.length<allAreas.length&&F.areas.indexOf(c.dataset.area)<0) show=false;
+      var seenHidden=false;
+      if(show&&!showSeen&&seen[c.dataset.id]&&seenAtLoad[c.dataset.id]){ show=false; seenHidden=true; }
       c.style.display=show?'':'none';
-      if(!show) hidden++;
+      if(!show){ if(seenHidden) hiddenSeen++; else hidden++; }
     });
-    document.getElementById('hiddencount').textContent=hidden?hidden+' boliger skjult af dine filtre':'alle boliger vises';
+    var hparts=[];
+    if(hidden) hparts.push(hidden+' boliger skjult af dine filtre');
+    if(hiddenSeen) hparts.push(hiddenSeen+' sete skjult');
+    document.getElementById('hiddencount').textContent=hparts.length?hparts.join(' · '):'alle boliger vises';
+    var stog=document.getElementById('seentoggle');
+    stog.textContent=showSeen?'Skjul sete boliger':'Vis sete boliger ('+hiddenSeen+')';
+    stog.hidden=!showSeen&&!hiddenSeen;
     saveF(F);
   }
   ['price','plot','living','cost','tol'].forEach(function(k){ el[k].addEventListener('input',apply) });
   el.onlyfull.addEventListener('change',apply);
+  document.getElementById('seentoggle').addEventListener('click',function(){
+    showSeen=!showSeen;
+    try{ localStorage.setItem(SVKEY,showSeen?'1':'0') }catch(e){}
+    apply();
+  });
   document.getElementById('f-reset').addEventListener('click',function(){
     try{ localStorage.removeItem(FKEY) }catch(e){}
     F=Object.assign({},defs);
