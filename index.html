@@ -77,7 +77,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <body><div class="wrap">
 <header>
 <h1>Sommerhuse — Hou / Mikkelmark</h1>
-<p class="sub">34 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret søndag den 30. august 2026 kl. 19.17</p>
+<p class="sub">34 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret søndag den 30. august 2026 kl. 19.25</p>
 </header>
 <div class="ch none">Ingen ændringer siden i går.</div>
 
@@ -1488,6 +1488,13 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   // visning bliver staaende nedtonet, saa listen ikke hopper.
   var seenAtLoad={}; for(var sk in seen) seenAtLoad[sk]=true;
 
+  // Tilbage-navigation: gaa tilbage til det kort man forlod, ikke toppen af siden.
+  var SPKEY='hou-scrollpos';
+  var pendingPos=null;
+  try{ var rawp=sessionStorage.getItem(SPKEY); if(rawp){ pendingPos=JSON.parse(rawp); sessionStorage.removeItem(SPKEY) } }catch(e){}
+  // Kortet man forlod maa ikke vaere skjult naar man vender tilbage i samme session.
+  if(pendingPos&&pendingPos.id&&seenAtLoad[pendingPos.id]) delete seenAtLoad[pendingPos.id];
+
   function paintSeen(card){
     var is=!!seen[card.dataset.id];
     card.querySelector('.seenbtn').setAttribute('aria-pressed',is?'true':'false');
@@ -1526,7 +1533,10 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
     var seenLinks=[].slice.call(card.querySelectorAll('h2 a'));
     var thumbEl=card.querySelector('img.thumb');
     if(thumbEl&&thumbEl.closest('a')) seenLinks.push(thumbEl.closest('a'));
-    seenLinks.forEach(function(a){ a.addEventListener('click',function(){ markSeen(card) }) });
+    seenLinks.forEach(function(a){ a.addEventListener('click',function(){
+      try{ sessionStorage.setItem(SPKEY,JSON.stringify({id:id,y:window.scrollY})) }catch(e){}
+      markSeen(card);
+    }) });
     card.querySelector('.favbtn').addEventListener('click',function(){
       var r=rec(id); r.fav=!r.fav; r.addr=card.dataset.addr;
       if(!r.fav&&!r.note) delete data[id];
@@ -1661,6 +1671,22 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
     apply();
   });
   apply();
+
+  // Gendan positionen efter apply(), ellers rammer vi forkert naar kort er skjult.
+  try{ history.scrollRestoration='manual' }catch(e){}
+  function restorePos(p){
+    if(!p) return;
+    var card=p.id?document.querySelector('article.k[data-id="'+p.id+'"]'):null;
+    if(card&&card.style.display!=='none') card.scrollIntoView({block:'center'});
+    else if(p.y!=null) window.scrollTo(0,p.y);
+  }
+  restorePos(pendingPos); pendingPos=null;
+  window.addEventListener('pageshow',function(ev){
+    if(!ev.persisted) return; // fuld indlaesning er haandteret ovenfor; bfcache koerer ikke scriptet forfra
+    var p=null;
+    try{ var r=sessionStorage.getItem(SPKEY); if(r){ p=JSON.parse(r); sessionStorage.removeItem(SPKEY) } }catch(e){}
+    restorePos(p);
+  });
 })();
 </script>
 </body></html>
