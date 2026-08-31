@@ -27,6 +27,8 @@ h2 a:hover{border-color:var(--acc)}
 .facts b{color:var(--mut);font-weight:500}
 .warn{color:#c15b2b;font-size:.8rem}
 .hot{color:#c15b2b;font-size:.78rem}
+.k.tilbage{outline:2px solid var(--acc,#2b6cb0);outline-offset:2px;transition:outline-color .5s}
+@media (prefers-reduced-motion:reduce){.k.tilbage{transition:none}}
 .maplink{color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
 .maplink:hover{text-decoration-style:solid}
 .mappin{margin-left:3px;font-size:.85em;text-decoration:none;display:inline-block}
@@ -87,7 +89,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <body><div class="wrap">
 <header>
 <h1>Sommerhuse — Hou / Mikkelmark</h1>
-<p class="sub">43 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret mandag den 31. august 2026 kl. 09.59</p>
+<p class="sub">43 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret mandag den 31. august 2026 kl. 14.25</p>
 
 </header>
 <div class="ch none">Ingen ændringer siden i går.</div>
@@ -1317,7 +1319,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="soegaardsvej-16-9370" data-addr="Søgårdsvej 16, 9370 Hals" data-match="partial"
-  data-price="940000" data-plot="1247" data-living="70" data-cost="863" data-area="Bisnap Nord">
+  data-price="940000" data-plot="1247" data-living="70" data-cost="763" data-area="Bisnap Nord">
   <div class="rank">31</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/soegaardsvej-16-9370-hals/sag-8280001117/">Søgårdsvej 16, 9370 Hals</a></h2>
@@ -1326,7 +1328,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
       <li><b>Grund</b> 1.247 m²</li>
       <li><b>Bolig</b> 70 m²</li>
       <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=S%C3%B8g%C3%A5rdsvej%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 863 kr./md.</li>
+      <li><b>Ejerudgift</b> 763 kr./md.</li>
       <li><b>Byggeår</b> 1970</li>
       
       
@@ -1860,10 +1862,37 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   var seenAtLoad={}; for(var sk in seen) seenAtLoad[sk]=true;
 
   // Tilbage-navigation: gaa tilbage til det kort man forlod, ikke toppen af siden.
-  var SPKEY='hou-scrollpos';
-  var pendingPos=null;
-  try{ var rawp=sessionStorage.getItem(SPKEY); if(rawp){ pendingPos=JSON.parse(rawp); sessionStorage.removeItem(SPKEY) } }catch(e){}
-  // Kortet man forlod maa ikke vaere skjult naar man vender tilbage i samme session.
+  //
+  // Positionen ligger i localStorage - IKKE sessionStorage. sessionStorage er
+  // privat pr. fane, saa aabnede maeglerens side i en ny fane (det sker fra
+  // hjemmeskaerms-genveje og in-app browsere, fx naar listen aabnes fra en
+  // ntfy-besked), var positionen vaek. localStorage deles af alle faner paa
+  // samme adresse og overlever ogsaa at fanen smides ud af hukommelsen.
+  //
+  // Den slettes heller ikke efter brug - foer virkede gendannelsen kun ÉN gang.
+  // I stedet har den et tidsstempel: er den aeldre end MAXAGE, ignoreres den,
+  // saa man starter naturligt fra toppen naeste dag.
+  var SPKEY='hou-pos-v1';
+  var MAXAGE=6*60*60*1000;
+  function laesPos(){
+    try{
+      var r=localStorage.getItem(SPKEY); if(!r) return null;
+      var p=JSON.parse(r);
+      if(!p||typeof p!=='object') return null;
+      if(!p.t||(Date.now()-p.t)>MAXAGE) return null;
+      return p;
+    }catch(e){ return null }
+  }
+  function gemPos(id){
+    try{
+      var p={y:window.scrollY,t:Date.now()};
+      if(id) p.id=id; else if(sidstSete) p.id=sidstSete;
+      localStorage.setItem(SPKEY,JSON.stringify(p));
+    }catch(e){}
+  }
+  var sidstSete=null;
+  var pendingPos=laesPos();
+  // Kortet man forlod maa ikke vaere skjult naar man vender tilbage.
   if(pendingPos&&pendingPos.id&&seenAtLoad[pendingPos.id]) delete seenAtLoad[pendingPos.id];
 
   function paintSeen(card){
@@ -1905,7 +1934,11 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
     var thumbEl=card.querySelector('img.thumb');
     if(thumbEl&&thumbEl.closest('a')) seenLinks.push(thumbEl.closest('a'));
     seenLinks.forEach(function(a){ a.addEventListener('click',function(){
-      try{ sessionStorage.setItem(SPKEY,JSON.stringify({id:id,y:window.scrollY})) }catch(e){}
+      // sidstSete SKAL saettes her. Naar siden forlades, fyrer pagehide og gemmer
+      // positionen igen - uden det her ville den overskrive husets id med ingenting,
+      // og saa mistede vi baade markeringen og det praecise kort at vende tilbage til.
+      sidstSete=id;
+      gemPos(id);
       markSeen(card);
     }) });
     card.querySelector('.favbtn').addEventListener('click',function(){
@@ -2085,19 +2118,60 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   apply();
 
   // Gendan positionen efter apply(), ellers rammer vi forkert naar kort er skjult.
-  try{ history.scrollRestoration='manual' }catch(e){}
+  // Browserens EGEN gendannelse slaas kun fra hvis vi rent faktisk har en position
+  // at saette i stedet. Foer blev den altid slaaet fra, saa naar vores fejlede,
+  // var der intet sikkerhedsnet og man faldt helt til toppen.
+  if(pendingPos){ try{ history.scrollRestoration='manual' }catch(e){} }
   function restorePos(p){
-    if(!p) return;
+    if(!p) return false;
     var card=p.id?document.querySelector('article.k[data-id="'+p.id+'"]'):null;
-    if(card&&card.style.display!=='none') card.scrollIntoView({block:'center'});
-    else if(p.y!=null) window.scrollTo(0,p.y);
+    if(card&&card.style.display!=='none'){ card.scrollIntoView({block:'center'}); markerKort(card); return true }
+    if(p.y!=null){ window.scrollTo(0,p.y); return true }
+    return false;
   }
-  restorePos(pendingPos); pendingPos=null;
+  // Kort blink paa det hus man sidst aabnede, saa man kan se hvor man slap.
+  var harMarkeret=false;
+  function markerKort(card){
+    if(harMarkeret) return;
+    harMarkeret=true;
+    card.classList.add('tilbage');
+    setTimeout(function(){ card.classList.remove('tilbage') },2200);
+  }
+  // Fotoene indlaeses dovent (loading="lazy"). De faar sidens hoejde til at aendre
+  // sig EFTER vi har scrollet, saa foerste forsoeg rammer ved siden af. Derfor
+  // gentages gendannelsen naar siden er faerdigindlaest - men kun saa laenge
+  // brugeren ikke selv har roert skaermen. Ellers ville vi rykke under fingeren.
+  var maalPos=pendingPos;
+  var brugerStyrer=false;
+  ['wheel','touchstart','touchmove','keydown','mousedown'].forEach(function(ev){
+    window.addEventListener(ev,function(){ brugerStyrer=true },{passive:true});
+  });
+  function gendanIgen(){
+    if(brugerStyrer||!maalPos) return;
+    restorePos(maalPos);
+  }
+  restorePos(pendingPos);
+  if(pendingPos&&pendingPos.id) sidstSete=pendingPos.id;
+  pendingPos=null;
+  setTimeout(gendanIgen,250);
+  window.addEventListener('load',function(){ setTimeout(gendanIgen,80) });
+  setTimeout(function(){ maalPos=null },3000);
+
+  // Gem positionen LOEBENDE - ikke kun naar man klikker et hus. Saa er den rigtig
+  // uanset hvordan siden forlades: luk fanen, skift app, tryk paa et link.
+  var gemTimer=null;
+  window.addEventListener('scroll',function(){
+    if(gemTimer) return;
+    gemTimer=setTimeout(function(){ gemTimer=null; gemPos(null) },300);
+  },{passive:true});
+  window.addEventListener('pagehide',function(){ gemPos(null) });
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') gemPos(null);
+  });
+
   window.addEventListener('pageshow',function(ev){
     if(!ev.persisted) return; // fuld indlaesning er haandteret ovenfor; bfcache koerer ikke scriptet forfra
-    var p=null;
-    try{ var r=sessionStorage.getItem(SPKEY); if(r){ p=JSON.parse(r); sessionStorage.removeItem(SPKEY) } }catch(e){}
-    restorePos(p);
+    restorePos(laesPos());
   });
 })();
 </script>
