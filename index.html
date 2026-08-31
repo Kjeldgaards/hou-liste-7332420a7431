@@ -27,6 +27,12 @@ h2 a:hover{border-color:var(--acc)}
 .facts b{color:var(--mut);font-weight:500}
 .warn{color:#c15b2b;font-size:.8rem}
 .hot{color:#c15b2b;font-size:.78rem}
+.runbox{margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#runnow{padding:9px 16px;border-radius:8px;border:1px solid var(--bd,#ccc);background:var(--card,#fff);
+  color:inherit;font-size:.85rem;font-weight:600;cursor:pointer;min-height:40px}
+#runnow:disabled{opacity:.55;cursor:default}
+#runmsg{font-size:.8rem;color:var(--mut)}
+#runmsg.fejl{color:#c0392b}
 .plotbadge{display:inline-block;margin-left:8px;padding:2px 7px;border-radius:6px;background:var(--acc,#2b6cb0);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.06em;vertical-align:middle}
 .down{color:var(--acc);font-weight:600}
 .tags{margin:0 0 6px;display:flex;flex-wrap:wrap;gap:6px}
@@ -78,7 +84,8 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <body><div class="wrap">
 <header>
 <h1>Sommerhuse — Hou / Mikkelmark</h1>
-<p class="sub">43 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret mandag den 31. august 2026 kl. 09.07</p>
+<p class="sub">43 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret mandag den 31. august 2026 kl. 09.41</p>
+
 </header>
 <div class="ch none">Ingen ændringer siden i går.</div>
 
@@ -1971,6 +1978,28 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   });
 
   buildFavs();
+
+  // "Koer tjekket nu": beder Cloudflare-Workeren om at starte workflowet.
+  // Selve GitHub-tokenen ligger KUN i Workeren - aldrig her paa siden.
+  (function(){
+    var btn=document.getElementById('runnow'); if(!btn) return;
+    var msg=document.getElementById('runmsg');
+    var URL_="", KEY="";
+    function sig(t,fejl){ msg.textContent=t; msg.className=fejl?'fejl':''; }
+    btn.addEventListener('click',function(){
+      btn.disabled=true; sig('Starter tjekket…');
+      var timer=setTimeout(function(){ btn.disabled=false; sig('Svarede ikke i tide — prøv igen.',true) },20000);
+      fetch(URL_,{method:'POST',headers:{'x-hou-key':KEY}})
+        .then(function(r){ return r.json().catch(function(){ return {ok:false,besked:'Uventet svar ('+r.status+')'} }) })
+        .then(function(d){
+          clearTimeout(timer);
+          sig(d.besked||(d.ok?'Startet.':'Kunne ikke starte.'), !d.ok);
+          if(d.ok){ setTimeout(function(){ sig('Hent siden igen om et par minutter for at se resultatet.') },9000); }
+          else { btn.disabled=false; }
+        })
+        .catch(function(){ clearTimeout(timer); btn.disabled=false; sig('Kunne ikke få fat i serveren.',true) });
+    });
+  })();
 
   // Filtre og tolerancer - virker med det samme og huskes paa telefonen.
   var FKEY='hou-filtre-v1';
