@@ -80,6 +80,36 @@ h2 a:hover{border-color:var(--acc)}
 #f-reset{font:inherit;font-size:.76rem;padding:4px 10px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer}
 .matchfilter{display:flex;gap:8px;align-items:center;font-size:.86rem;color:var(--mut);margin:0 0 10px;cursor:pointer}
 .matchfilter input{width:16px;height:16px;accent-color:var(--acc)}
+/* Sorteringslinje: vandret rulning paa telefon, ingen ombrydning der flytter listen */
+.sortbar{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin:0 0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.sortbar::-webkit-scrollbar{display:none}
+.sortlbl{flex:0 0 auto;align-self:center;font-size:.78rem;color:var(--mut);padding-right:2px}
+.sortchip{flex:0 0 auto;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:999px;
+ padding:6px 12px;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:inherit;min-height:34px}
+.sortchip:hover{border-color:var(--acc)}
+.sortchip[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+.sortchip .ar{margin-left:5px;font-size:.9em;display:inline-block}
+.sortchip:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* Etiketten inde i et kort er en knap der sorterer. Diskret: kun en prikket
+   understregning antyder det - siden skal ikke ligne et kontrolpanel. */
+.sk{-webkit-appearance:none;appearance:none;font:inherit;color:inherit;line-height:inherit;
+ background:none;border:0;margin:0;padding:0;cursor:pointer;text-align:inherit;
+ -webkit-tap-highlight-color:transparent;touch-action:manipulation;border-radius:5px}
+.facts .sk{display:inline-block;min-height:24px;padding:3px 5px;margin:-3px -5px}
+.facts .sk>b{text-decoration:underline dotted var(--line);text-underline-offset:3px;text-decoration-thickness:1px}
+.facts{row-gap:9px}
+.sk:active{opacity:.55}
+.sk:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+/* Tag-knapperne skal se ud PRAECIS som de "piller" de var foer knap-nulstillingen.
+   Reglen staar efter .sk, saa ramme, farve og form vinder. */
+.tags .sk{font-size:.76rem;padding:3px 9px;border-radius:20px;border:1px solid var(--line);color:var(--mut);min-height:24px}
+.tags .sk.v-Excellent,.tags .sk.p-High{border-color:var(--acc);color:var(--acc)}
+.tags{gap:8px}
+@media(hover:hover) and (pointer:fine){
+ .facts .sk:hover>b{color:var(--fg);text-decoration-color:var(--acc)}
+ .tags .sk:hover{border-color:var(--acc);color:var(--fg)}
+}
 #hiddencount{font-size:.78rem}
 #favsec{margin-top:18px}
 .favhelp{font-size:.76rem;color:var(--mut);margin:4px 0 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -89,7 +119,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <body><div class="wrap">
 <header>
 <h1>Sommerhuse — Hou / Mikkelmark</h1>
-<p class="sub">43 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret tirsdag den 1. september 2026 kl. 11.27</p>
+<p class="sub">43 boliger til salg lige nu · under 1.650.000 kr · grund fra 1000 m² · bedste score først<br>Opdateret tirsdag den 1. september 2026 kl. 12.03</p>
 
 </header>
 <div class="ch none">Ingen ændringer siden i går.</div>
@@ -114,31 +144,53 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   <div class="fareas" id="f-areas"></div>
   <div class="frow"><span id="hiddencount"></span> <button type="button" id="f-reset">Nulstil til mine kriterier</button></div>
 </details>
+<div class="sortbar" id="sortbar" role="group" aria-label="Sortér listen">
+  <span class="sortlbl">Sortér:</span>
+  <button type="button" class="sortchip" data-k="rank" aria-pressed="false">Standard<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="price" aria-pressed="false">Pris<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="plot" aria-pressed="false">Grund<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="living" aria-pressed="false">Bolig<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="cost" aria-pressed="false">Ejerudgift<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="year" aria-pressed="false">Byggeår<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="days" aria-pressed="false">Til salg<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="chg" aria-pressed="false">Prisudvikling<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="total" aria-pressed="false">Samlet score<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="val" aria-pressed="false">Value<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="priv" aria-pressed="false">Privatliv<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="green" aria-pressed="false">Grønt<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="nb" aria-pressed="false">Nabohus<span class="ar" aria-hidden="true"></span></button>
+  <button type="button" class="sortchip" data-k="area" aria-pressed="false">Område<span class="ar" aria-hidden="true"></span></button>
+</div>
+<p class="vh" id="sortstatus" role="status" aria-live="polite"></p>
 <div class="listctl">
 <label class="matchfilter"><input type="checkbox" id="onlyfull"> Vis kun boliger der opfylder alle kriterier 100 %</label>
 <button type="button" id="seentoggle" hidden></button>
 </div>
 <article class="k" data-id="havvejen-17-9370" data-addr="Havvejen 17, Hou, 9370 Hals" data-match="full"
-  data-price="1480000" data-plot="3399" data-living="145" data-cost="1531" data-area="Hou Syd">
+  data-rank="1"
+  data-price="1480000" data-plot="3399" data-living="145" data-cost="1531" data-area="Hou Syd"
+  data-year="1978" data-days="547" data-chg="-10"
+  data-total="99" data-green="9" data-nb="13"
+  data-val="4" data-priv="3">
   <div class="rank">1</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/havvejen-17/93803710/">Havvejen 17, Hou, 9370 Hals</a></h2>
     <p class="price">1.480.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 3.399 m²</li>
-      <li><b>Bolig</b> 145 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Havvejen%2017%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Hou Syd på kort">Hou Syd<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.531 kr./md.</li>
-      <li><b>Byggeår</b> 1978 (omb. 2001)</li>
-      <li><b>Til salg</b> 547 dage <span class="hot">længe</span></li>
-      <li><b>Prisudvikling</b> <span class="down">-10 %</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 3.399 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 145 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Havvejen%2017%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Hou Syd på kort">Hou Syd<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.531 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1978 (omb. 2001)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 547 dage <span class="hot">længe</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="chg" aria-label="Sortér efter prisudvikling"><b>Prisudvikling</b></button> <span class="down">-10 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Score: Fremragende</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 9/10</span>
-      <span class="t">Samlet 99/100</span>
-      <span class="t">Nabohus 13 m</span>
+      <button type="button" class="t sk v-Excellent" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Fremragende</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 9/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 99/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 13 m</button>
     </p>
     
     
@@ -159,26 +211,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="jagtvej-7-9370" data-addr="Jagtvej 7, 9370 Hals" data-match="full"
-  data-price="798000" data-plot="2539" data-living="98" data-cost="1278" data-area="Lyngoeen">
+  data-rank="2"
+  data-price="798000" data-plot="2539" data-living="98" data-cost="1278" data-area="Lyngoeen"
+  data-year="1996" data-days="" data-chg=""
+  data-total="98" data-green="9" data-nb="13"
+  data-val="4" data-priv="3">
   <div class="rank">2</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/jagtvej-7-9370-hals/sag-8280001060/">Jagtvej 7, 9370 Hals</a></h2>
     <p class="price">798.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 2.539 m²</li>
-      <li><b>Bolig</b> 98 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Jagtvej%207%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.278 kr./md.</li>
-      <li><b>Byggeår</b> 1996</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 2.539 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 98 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Jagtvej%207%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.278 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1996</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Score: Fremragende</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 9/10</span>
-      <span class="t">Samlet 98/100</span>
-      <span class="t">Nabohus 13 m</span>
+      <button type="button" class="t sk v-Excellent" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Fremragende</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 9/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 98/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 13 m</button>
     </p>
     
     
@@ -199,26 +255,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="skovsgaardsvej-64-9370" data-addr="Skovsgårdsvej 64, 9370 Hals" data-match="full"
-  data-price="620000" data-plot="2486" data-living="67" data-cost="949" data-area="Koldkaer">
+  data-rank="3"
+  data-price="620000" data-plot="2486" data-living="67" data-cost="949" data-area="Koldkaer"
+  data-year="1964" data-days="146" data-chg="-3"
+  data-total="92" data-green="8" data-nb="16"
+  data-val="4" data-priv="3">
   <div class="rank">3</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/skovsgaardsvej-64/93804155/">Skovsgårdsvej 64, 9370 Hals</a></h2>
     <p class="price">620.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 2.486 m²</li>
-      <li><b>Bolig</b> 67 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Skovsg%C3%A5rdsvej%2064%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 949 kr./md.</li>
-      <li><b>Byggeår</b> 1964 (omb. 1983)</li>
-      <li><b>Til salg</b> 146 dage</li>
-      <li><b>Prisudvikling</b> <span class="down">-3 %</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 2.486 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 67 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Skovsg%C3%A5rdsvej%2064%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 949 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1964 (omb. 1983)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 146 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="chg" aria-label="Sortér efter prisudvikling"><b>Prisudvikling</b></button> <span class="down">-3 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Score: Fremragende</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 92/100</span>
-      <span class="t">Nabohus 16 m</span>
+      <button type="button" class="t sk v-Excellent" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Fremragende</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 92/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 16 m</button>
     </p>
     
     
@@ -239,26 +299,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="rasmus-jensens-vej-39-9370" data-addr="Rasmus Jensens Vej 39, Hou, 9370 Hals" data-match="full"
-  data-price="745000" data-plot="2028" data-living="62" data-cost="995" data-area="Lyngoeen">
+  data-rank="4"
+  data-price="745000" data-plot="2028" data-living="62" data-cost="995" data-area="Lyngoeen"
+  data-year="1981" data-days="126" data-chg="-12"
+  data-total="84" data-green="5" data-nb="6"
+  data-val="4" data-priv="2">
   <div class="rank">4</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-39/93804189/">Rasmus Jensens Vej 39, Hou, 9370 Hals</a></h2>
     <p class="price">745.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 2.028 m²</li>
-      <li><b>Bolig</b> 62 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Rasmus%20Jensens%20Vej%2039%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 995 kr./md.</li>
-      <li><b>Byggeår</b> 1981</li>
-      <li><b>Til salg</b> 126 dage</li>
-      <li><b>Prisudvikling</b> <span class="down">-12 %</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 2.028 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 62 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Rasmus%20Jensens%20Vej%2039%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 995 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1981</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 126 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="chg" aria-label="Sortér efter prisudvikling"><b>Prisudvikling</b></button> <span class="down">-12 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Score: Fremragende</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 84/100</span>
-      <span class="t">Nabohus 6 m</span>
+      <button type="button" class="t sk v-Excellent" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Fremragende</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 5/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 84/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 6 m</button>
     </p>
     
     
@@ -279,26 +343,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="hou-vest-57-9370" data-addr="Hou Vest 57, Hou, 9370 Hals" data-match="partial"
-  data-price="475000" data-plot="1284" data-living="65" data-cost="961" data-area="Mikkelmark">
+  data-rank="5"
+  data-price="475000" data-plot="1284" data-living="65" data-cost="961" data-area="Mikkelmark"
+  data-year="1970" data-days="47" data-chg="0"
+  data-total="77" data-green="8" data-nb="3"
+  data-val="4" data-priv="3">
   <div class="rank">5</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/hou-vest-57/93803877/">Hou Vest 57, Hou, 9370 Hals</a></h2>
     <p class="price">475.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.284 m²</li>
-      <li><b>Bolig</b> 65 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Hou%20Vest%2057%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 961 kr./md.</li>
-      <li><b>Byggeår</b> 1970</li>
-      <li><b>Til salg</b> 47 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.284 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 65 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Hou%20Vest%2057%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 961 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1970</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 47 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Score: Fremragende</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 77/100</span>
-      <span class="t">Nabohus 3 m</span>
+      <button type="button" class="t sk v-Excellent" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Fremragende</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 77/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 3 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 1 % under ønsket</span></p>
     
@@ -319,26 +387,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="svanevej-3-9370" data-addr="Svanevej 3, Hou, 9370 Hals" data-match="partial"
-  data-price="575000" data-plot="1182" data-living="70" data-cost="537" data-area="Lyngoeen">
+  data-rank="6"
+  data-price="575000" data-plot="1182" data-living="70" data-cost="537" data-area="Lyngoeen"
+  data-year="1965" data-days="134" data-chg="0"
+  data-total="72" data-green="9" data-nb="8"
+  data-val="4" data-priv="3">
   <div class="rank">6</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svanevej-3/93804107/">Svanevej 3, Hou, 9370 Hals</a></h2>
     <p class="price">575.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.182 m²</li>
-      <li><b>Bolig</b> 70 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Svanevej%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 537 kr./md.</li>
-      <li><b>Byggeår</b> 1965 (omb. 1995)</li>
-      <li><b>Til salg</b> 134 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.182 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 70 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Svanevej%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 537 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1965 (omb. 1995)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 134 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Score: Fremragende</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 9/10</span>
-      <span class="t">Samlet 72/100</span>
-      <span class="t">Nabohus 8 m</span>
+      <button type="button" class="t sk v-Excellent" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Fremragende</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 9/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 72/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 8 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 9 % under ønsket</span></p>
     
@@ -359,25 +431,29 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="roedgranvej-21-9370" data-addr="Rødgranvej 21, Hou, 9370 Hals" data-match="partial"
-  data-price="275000" data-plot="1548" data-living="" data-cost="199" data-area="Mikkelmark">
+  data-rank="7"
+  data-price="275000" data-plot="1548" data-living="" data-cost="199" data-area="Mikkelmark"
+  data-year="" data-days="" data-chg=""
+  data-total="71" data-green="7" data-nb=""
+  data-val="4" data-priv="">
   <div class="rank">7</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0063-roedgranvej-21-hou">Rødgranvej 21, Hou, 9370 Hals</a><span class="plotbadge">GRUND</span></h2>
     <p class="price">275.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.548 m²</li>
-      <li><b>Bolig</b> ingen bygning</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=R%C3%B8dgranvej%2021%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 199 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.548 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> ingen bygning</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=R%C3%B8dgranvej%2021%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 199 kr./md.</li>
       
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Score: Fremragende</span>
-      <span class="t p-Unknown">Privatliv: Ukendt</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 71/100</span>
+      <button type="button" class="t sk v-Excellent" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Fremragende</button>
+      <button type="button" class="t sk p-Unknown" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Ukendt</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 71/100</button>
       
     </p>
     
@@ -399,26 +475,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="roedgranvej-3-9370" data-addr="Rødgranvej 3, Hou, 9370 Hals" data-match="partial"
-  data-price="625000" data-plot="1261" data-living="66" data-cost="1044" data-area="Mikkelmark">
+  data-rank="8"
+  data-price="625000" data-plot="1261" data-living="66" data-cost="1044" data-area="Mikkelmark"
+  data-year="1978" data-days="872" data-chg="0"
+  data-total="63" data-green="7" data-nb="12"
+  data-val="4" data-priv="2">
   <div class="rank">8</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/roedgranvej-3/93803393/">Rødgranvej 3, Hou, 9370 Hals</a></h2>
     <p class="price">625.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.261 m²</li>
-      <li><b>Bolig</b> 66 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=R%C3%B8dgranvej%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.044 kr./md.</li>
-      <li><b>Byggeår</b> 1978 (omb. 1996)</li>
-      <li><b>Til salg</b> 872 dage <span class="hot">længe</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.261 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 66 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=R%C3%B8dgranvej%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.044 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1978 (omb. 1996)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 872 dage <span class="hot">længe</span></li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Excellent">Score: Fremragende</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 63/100</span>
-      <span class="t">Nabohus 12 m</span>
+      <button type="button" class="t sk v-Excellent" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Fremragende</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 63/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 12 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 3 % under ønsket</span></p>
     
@@ -439,26 +519,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="lyngtoftegaard-3-9370" data-addr="Lyngtoftegård 3, Hou, 9370 Hals" data-match="full"
-  data-price="835000" data-plot="1771" data-living="56" data-cost="934" data-area="Hou">
+  data-rank="9"
+  data-price="835000" data-plot="1771" data-living="56" data-cost="934" data-area="Hou"
+  data-year="1979" data-days="19" data-chg="0"
+  data-total="90" data-green="9" data-nb="14"
+  data-val="3" data-priv="3">
   <div class="rank">9</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/lyngtoftegaard-3/93803880/">Lyngtoftegård 3, Hou, 9370 Hals</a></h2>
     <p class="price">835.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.771 m²</li>
-      <li><b>Bolig</b> 56 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Lyngtofteg%C3%A5rd%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Hou på kort">Hou<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 934 kr./md.</li>
-      <li><b>Byggeår</b> 1979</li>
-      <li><b>Til salg</b> 19 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.771 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 56 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Lyngtofteg%C3%A5rd%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Hou på kort">Hou<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 934 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1979</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 19 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 9/10</span>
-      <span class="t">Samlet 90/100</span>
-      <span class="t">Nabohus 14 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 9/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 90/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 14 m</button>
     </p>
     
     
@@ -479,26 +563,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="rasmus-jensens-vej-4-9370" data-addr="Rasmus Jensens Vej 4, Hou, 9370 Hals" data-match="full"
-  data-price="775000" data-plot="1618" data-living="54" data-cost="969" data-area="Lyngoeen">
+  data-rank="10"
+  data-price="775000" data-plot="1618" data-living="54" data-cost="969" data-area="Lyngoeen"
+  data-year="1977" data-days="116" data-chg="0"
+  data-total="90" data-green="8" data-nb="6"
+  data-val="3" data-priv="3">
   <div class="rank">10</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-4/93804218/">Rasmus Jensens Vej 4, Hou, 9370 Hals</a></h2>
     <p class="price">775.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.618 m²</li>
-      <li><b>Bolig</b> 54 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Rasmus%20Jensens%20Vej%204%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 969 kr./md.</li>
-      <li><b>Byggeår</b> 1977</li>
-      <li><b>Til salg</b> 116 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.618 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 54 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Rasmus%20Jensens%20Vej%204%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 969 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1977</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 116 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 90/100</span>
-      <span class="t">Nabohus 6 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 90/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 6 m</button>
     </p>
     
     
@@ -519,26 +607,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="nordvestvej-4-9370" data-addr="Nordvestvej 4, 9370 Hals" data-match="full"
-  data-price="1098000" data-plot="2442" data-living="72" data-cost="1065" data-area="Bisnap Nord">
+  data-rank="11"
+  data-price="1098000" data-plot="2442" data-living="72" data-cost="1065" data-area="Bisnap Nord"
+  data-year="2002" data-days="" data-chg=""
+  data-total="90" data-green="7" data-nb="4"
+  data-val="3" data-priv="3">
   <div class="rank">11</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/nordvestvej-4-9370-hals/sag-8280001084/">Nordvestvej 4, 9370 Hals</a></h2>
     <p class="price">1.098.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 2.442 m²</li>
-      <li><b>Bolig</b> 72 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Nordvestvej%204%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.065 kr./md.</li>
-      <li><b>Byggeår</b> 2002</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 2.442 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 72 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Nordvestvej%204%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.065 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 2002</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 90/100</span>
-      <span class="t">Nabohus 4 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 90/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 4 m</button>
     </p>
     
     
@@ -559,26 +651,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="dyreengen-5-9370" data-addr="Dyreengen 5, Hou, 9370 Hals" data-match="full"
-  data-price="649000" data-plot="1406" data-living="58" data-cost="801" data-area="Mikkelmark">
+  data-rank="12"
+  data-price="649000" data-plot="1406" data-living="58" data-cost="801" data-area="Mikkelmark"
+  data-year="1984" data-days="131" data-chg="-5"
+  data-total="84" data-green="8" data-nb="13"
+  data-val="3" data-priv="3">
   <div class="rank">12</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/dyreengen-5/93804205/">Dyreengen 5, Hou, 9370 Hals</a></h2>
     <p class="price">649.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.406 m²</li>
-      <li><b>Bolig</b> 58 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Dyreengen%205%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 801 kr./md.</li>
-      <li><b>Byggeår</b> 1984 (omb. 2001)</li>
-      <li><b>Til salg</b> 131 dage</li>
-      <li><b>Prisudvikling</b> <span class="down">-5 %</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.406 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 58 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Dyreengen%205%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 801 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1984 (omb. 2001)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 131 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="chg" aria-label="Sortér efter prisudvikling"><b>Prisudvikling</b></button> <span class="down">-5 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 84/100</span>
-      <span class="t">Nabohus 13 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 84/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 13 m</button>
     </p>
     
     
@@ -599,26 +695,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="maagevej-1-9370" data-addr="Mågevej 1, Hou, 9370 Hals" data-match="full"
-  data-price="975000" data-plot="1391" data-living="122" data-cost="1177" data-area="Hou">
+  data-rank="13"
+  data-price="975000" data-plot="1391" data-living="122" data-cost="1177" data-area="Hou"
+  data-year="1970" data-days="" data-chg=""
+  data-total="84" data-green="8" data-nb="17"
+  data-val="3" data-priv="3">
   <div class="rank">13</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/maagevej/n105085/n1050850000189">Mågevej 1, Hou, 9370 Hals</a></h2>
     <p class="price">975.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.391 m²</li>
-      <li><b>Bolig</b> 122 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=M%C3%A5gevej%201%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Hou på kort">Hou<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.177 kr./md.</li>
-      <li><b>Byggeår</b> 1970</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.391 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 122 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=M%C3%A5gevej%201%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Hou på kort">Hou<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.177 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1970</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 84/100</span>
-      <span class="t">Nabohus 17 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 84/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 17 m</button>
     </p>
     
     
@@ -639,26 +739,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="svingelen-17-9370" data-addr="Svingelen 17, 9370 Hals" data-match="full"
-  data-price="695000" data-plot="1367" data-living="60" data-cost="928" data-area="Torndrup Strand">
+  data-rank="14"
+  data-price="695000" data-plot="1367" data-living="60" data-cost="928" data-area="Torndrup Strand"
+  data-year="1977" data-days="" data-chg=""
+  data-total="80" data-green="6" data-nb="4"
+  data-val="3" data-priv="3">
   <div class="rank">14</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0351-svingelen-17">Svingelen 17, 9370 Hals</a></h2>
     <p class="price">695.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.367 m²</li>
-      <li><b>Bolig</b> 60 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Svingelen%2017%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 928 kr./md.</li>
-      <li><b>Byggeår</b> 1977</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.367 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 60 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Svingelen%2017%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 928 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1977</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 80/100</span>
-      <span class="t">Nabohus 4 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 6/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 80/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 4 m</button>
     </p>
     
     
@@ -679,26 +783,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="svingelen-6-9370" data-addr="Svingelen 6, 9370 Hals" data-match="full"
-  data-price="1295000" data-plot="1985" data-living="113" data-cost="1187" data-area="Torndrup Strand">
+  data-rank="15"
+  data-price="1295000" data-plot="1985" data-living="113" data-cost="1187" data-area="Torndrup Strand"
+  data-year="1972" data-days="70" data-chg="0"
+  data-total="77" data-green="7" data-nb="11"
+  data-val="3" data-priv="2">
   <div class="rank">15</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/svingelen-6/93803721/">Svingelen 6, 9370 Hals</a></h2>
     <p class="price">1.295.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.985 m²</li>
-      <li><b>Bolig</b> 113 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Svingelen%206%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.187 kr./md.</li>
-      <li><b>Byggeår</b> 1972 (omb. 2016)</li>
-      <li><b>Til salg</b> 70 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.985 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 113 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Svingelen%206%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.187 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1972 (omb. 2016)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 70 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 77/100</span>
-      <span class="t">Nabohus 11 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 77/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 11 m</button>
     </p>
     
     
@@ -719,26 +827,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="rasmus-jensens-vej-8-9370" data-addr="Rasmus Jensens Vej 8, Hou, 9370 Hals" data-match="partial"
-  data-price="625000" data-plot="1259" data-living="54" data-cost="869" data-area="Lyngoeen">
+  data-rank="16"
+  data-price="625000" data-plot="1259" data-living="54" data-cost="869" data-area="Lyngoeen"
+  data-year="1972" data-days="327" data-chg="-10"
+  data-total="73" data-green="8" data-nb="11"
+  data-val="3" data-priv="3">
   <div class="rank">16</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/rasmus-jensens-vej-8/93803638/">Rasmus Jensens Vej 8, Hou, 9370 Hals</a></h2>
     <p class="price">625.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.259 m²</li>
-      <li><b>Bolig</b> 54 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Rasmus%20Jensens%20Vej%208%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 869 kr./md.</li>
-      <li><b>Byggeår</b> 1972</li>
-      <li><b>Til salg</b> 327 dage</li>
-      <li><b>Prisudvikling</b> <span class="down">-10 %</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.259 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 54 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Rasmus%20Jensens%20Vej%208%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 869 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1972</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 327 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="chg" aria-label="Sortér efter prisudvikling"><b>Prisudvikling</b></button> <span class="down">-10 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 73/100</span>
-      <span class="t">Nabohus 11 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 73/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 11 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 3 % under ønsket</span></p>
     
@@ -759,26 +871,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="koldkaervej-17-9370" data-addr="Koldkærvej 17, Koldkær, 9370 Hals" data-match="partial"
-  data-price="998000" data-plot="2338" data-living="70" data-cost="1830" data-area="Koldkaer">
+  data-rank="17"
+  data-price="998000" data-plot="2338" data-living="70" data-cost="1830" data-area="Koldkaer"
+  data-year="1993" data-days="" data-chg=""
+  data-total="73" data-green="8" data-nb="19"
+  data-val="3" data-priv="">
   <div class="rank">17</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/koldkaervej-17-9370-hals/sag-8280001053/">Koldkærvej 17, Koldkær, 9370 Hals</a></h2>
     <p class="price">998.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 2.338 m²</li>
-      <li><b>Bolig</b> 70 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Koldk%C3%A6rvej%2017%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.830 kr./md.</li>
-      <li><b>Byggeår</b> 1993</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 2.338 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 70 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Koldk%C3%A6rvej%2017%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.830 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1993</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Unknown">Privatliv: Ukendt</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 73/100</span>
-      <span class="t">Nabohus 19 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Unknown" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Ukendt</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 73/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 19 m</button>
     </p>
     
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -799,26 +915,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="vestvej-30-9370" data-addr="Vestvej 30, 9370 Hals" data-match="partial"
-  data-price="625000" data-plot="1251" data-living="55" data-cost="1079" data-area="Bisnap Nord">
+  data-rank="18"
+  data-price="625000" data-plot="1251" data-living="55" data-cost="1079" data-area="Bisnap Nord"
+  data-year="1972" data-days="95" data-chg="0"
+  data-total="70" data-green="8" data-nb="10"
+  data-val="3" data-priv="3">
   <div class="rank">18</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/vestvej-30/93804248/">Vestvej 30, 9370 Hals</a></h2>
     <p class="price">625.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.251 m²</li>
-      <li><b>Bolig</b> 55 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Vestvej%2030%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.079 kr./md.</li>
-      <li><b>Byggeår</b> 1972</li>
-      <li><b>Til salg</b> 95 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.251 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 55 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Vestvej%2030%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.079 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1972</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 95 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 70/100</span>
-      <span class="t">Nabohus 10 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 70/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 10 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 4 % under ønsket</span></p>
     
@@ -839,26 +959,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="kronhjortevej-1-9370" data-addr="Kronhjortevej 1, Mikkelmark, 9370 Hals" data-match="partial"
-  data-price="695000" data-plot="1319" data-living="60" data-cost="889" data-area="Mikkelmark">
+  data-rank="19"
+  data-price="695000" data-plot="1319" data-living="60" data-cost="889" data-area="Mikkelmark"
+  data-year="1976" data-days="8" data-chg="0"
+  data-total="66" data-green="7" data-nb="5"
+  data-val="3" data-priv="2">
   <div class="rank">19</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/kronhjortevej-1/93804332/">Kronhjortevej 1, Mikkelmark, 9370 Hals</a></h2>
     <p class="price">695.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.319 m²</li>
-      <li><b>Bolig</b> 60 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kronhjortevej%201%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 889 kr./md.</li>
-      <li><b>Byggeår</b> 1976</li>
-      <li><b>Til salg</b> 8 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.319 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 60 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kronhjortevej%201%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 889 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1976</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 8 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 66/100</span>
-      <span class="t">Nabohus 5 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 66/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 5 m</button>
     </p>
     
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (2/3): På billede 1 anes en lys bygning/gavl bag træerne i venstre baggrund — sandsynligvis nabo, men stærkt sløret af beplantning</p>
@@ -879,26 +1003,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="planetvej-3-9370" data-addr="Planetvej 3, Gl Bisnap, 9370 Hals" data-match="partial"
-  data-price="785000" data-plot="1444" data-living="65" data-cost="961" data-area="Bisnap">
+  data-rank="20"
+  data-price="785000" data-plot="1444" data-living="65" data-cost="961" data-area="Bisnap"
+  data-year="1980" data-days="" data-chg=""
+  data-total="60" data-green="5" data-nb="11"
+  data-val="3" data-priv="">
   <div class="rank">20</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/planetvej-3-9370-hals/sag-8280000931/">Planetvej 3, Gl Bisnap, 9370 Hals</a></h2>
     <p class="price">785.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.444 m²</li>
-      <li><b>Bolig</b> 65 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Planetvej%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap på kort">Bisnap<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 961 kr./md.</li>
-      <li><b>Byggeår</b> 1980</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.444 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 65 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Planetvej%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap på kort">Bisnap<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 961 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1980</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Unknown">Privatliv: Ukendt</span>
-      <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 60/100</span>
-      <span class="t">Nabohus 11 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Unknown" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Ukendt</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 5/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 60/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 11 m</button>
     </p>
     
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -919,26 +1047,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="mosters-vaenge-22-9370" data-addr="Mosters Vænge 22, 9370 Hals" data-match="partial"
-  data-price="798000" data-plot="1225" data-living="102" data-cost="1266" data-area="Koldkaer">
+  data-rank="21"
+  data-price="798000" data-plot="1225" data-living="102" data-cost="1266" data-area="Koldkaer"
+  data-year="1968" data-days="" data-chg=""
+  data-total="54" data-green="6" data-nb="4"
+  data-val="3" data-priv="2">
   <div class="rank">21</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/mostersvaenge/n105912/n1059120000578">Mosters Vænge 22, 9370 Hals</a></h2>
     <p class="price">798.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.225 m²</li>
-      <li><b>Bolig</b> 102 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Mosters%20V%C3%A6nge%2022%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.266 kr./md.</li>
-      <li><b>Byggeår</b> 1968</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.225 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 102 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Mosters%20V%C3%A6nge%2022%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.266 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1968</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 54/100</span>
-      <span class="t">Nabohus 4 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 6/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 54/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 4 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 6 % under ønsket</span></p>
     
@@ -959,26 +1091,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="palsgaardsmark-18-9370" data-addr="Palsgårdsmark 18, Hou, 9370 Hals" data-match="partial"
-  data-price="745000" data-plot="1051" data-living="75" data-cost="1021" data-area="Mikkelmark">
+  data-rank="22"
+  data-price="745000" data-plot="1051" data-living="75" data-cost="1021" data-area="Mikkelmark"
+  data-year="1976" data-days="342" data-chg="-6"
+  data-total="53" data-green="7" data-nb="8"
+  data-val="3" data-priv="2">
   <div class="rank">22</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-18/93803971/">Palsgårdsmark 18, Hou, 9370 Hals</a></h2>
     <p class="price">745.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.051 m²</li>
-      <li><b>Bolig</b> 75 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Palsg%C3%A5rdsmark%2018%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.021 kr./md.</li>
-      <li><b>Byggeår</b> 1976</li>
-      <li><b>Til salg</b> 342 dage</li>
-      <li><b>Prisudvikling</b> <span class="down">-6 %</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.051 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 75 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Palsg%C3%A5rdsmark%2018%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.021 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1976</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 342 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="chg" aria-label="Sortér efter prisudvikling"><b>Prisudvikling</b></button> <span class="down">-6 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 53/100</span>
-      <span class="t">Nabohus 8 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 53/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 8 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 19 % under ønsket</span></p>
     
@@ -999,26 +1135,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="pumavej-3-9370" data-addr="Pumavej 3, Hou, 9370 Hals" data-match="partial"
-  data-price="870000" data-plot="1197" data-living="104" data-cost="1046" data-area="Mikkelmark">
+  data-rank="23"
+  data-price="870000" data-plot="1197" data-living="104" data-cost="1046" data-area="Mikkelmark"
+  data-year="1972" data-days="130" data-chg="0"
+  data-total="51" data-green="6" data-nb="2"
+  data-val="3" data-priv="2">
   <div class="rank">23</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/pumavej-3/93804169/">Pumavej 3, Hou, 9370 Hals</a></h2>
     <p class="price">870.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.197 m²</li>
-      <li><b>Bolig</b> 104 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Pumavej%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.046 kr./md.</li>
-      <li><b>Byggeår</b> 1972</li>
-      <li><b>Til salg</b> 130 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.197 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 104 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Pumavej%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.046 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1972</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 130 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 51/100</span>
-      <span class="t">Nabohus 2 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 6/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 51/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 2 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 8 % under ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (2/3): Mørkt nabotag anes i venstre billedkant på foto 16 og 18 ved indkørslen</p>
@@ -1039,26 +1179,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="fasanvej-4-9370" data-addr="Fasanvej 4, Lyngøen, 9370 Hals" data-match="partial"
-  data-price="748000" data-plot="1178" data-living="78" data-cost="1035" data-area="Lyngoeen">
+  data-rank="24"
+  data-price="748000" data-plot="1178" data-living="78" data-cost="1035" data-area="Lyngoeen"
+  data-year="1997" data-days="" data-chg=""
+  data-total="49" data-green="5" data-nb="8"
+  data-val="3" data-priv="">
   <div class="rank">24</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/fasanvej-4-9370-hals/sag-8280001079/">Fasanvej 4, Lyngøen, 9370 Hals</a></h2>
     <p class="price">748.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.178 m²</li>
-      <li><b>Bolig</b> 78 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Fasanvej%204%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.035 kr./md.</li>
-      <li><b>Byggeår</b> 1997</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.178 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 78 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Fasanvej%204%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Lyngoeen på kort">Lyngoeen<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.035 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1997</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Unknown">Privatliv: Ukendt</span>
-      <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 49/100</span>
-      <span class="t">Nabohus 8 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Unknown" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Ukendt</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 5/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 49/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 8 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 9 % under ønsket</span></p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -1079,26 +1223,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="nordmarksvej-12-9370" data-addr="Nordmarksvej 12, 9370 Hals" data-match="partial"
-  data-price="695000" data-plot="1189" data-living="64" data-cost="912" data-area="Torndrup Strand">
+  data-rank="25"
+  data-price="695000" data-plot="1189" data-living="64" data-cost="912" data-area="Torndrup Strand"
+  data-year="1974" data-days="15" data-chg="0"
+  data-total="47" data-green="6" data-nb="8"
+  data-val="3" data-priv="2">
   <div class="rank">25</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/nordmarksvej-12/93804324/">Nordmarksvej 12, 9370 Hals</a></h2>
     <p class="price">695.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.189 m²</li>
-      <li><b>Bolig</b> 64 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Nordmarksvej%2012%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 912 kr./md.</li>
-      <li><b>Byggeår</b> 1974</li>
-      <li><b>Til salg</b> 15 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.189 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 64 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Nordmarksvej%2012%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 912 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1974</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 15 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 47/100</span>
-      <span class="t">Nabohus 8 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 6/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 47/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 8 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 9 % under ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (3/3): På den overdækkede terrasse anes et rødbrunt nabohus/tag bag buskene til højre</p>
@@ -1119,26 +1267,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="mogensig-16-9370" data-addr="Mogensig 16, Hou, 9370 Hals" data-match="partial"
-  data-price="598000" data-plot="1083" data-living="44" data-cost="737" data-area="Mikkelmark">
+  data-rank="26"
+  data-price="598000" data-plot="1083" data-living="44" data-cost="737" data-area="Mikkelmark"
+  data-year="1979" data-days="" data-chg=""
+  data-total="45" data-green="6" data-nb="5"
+  data-val="3" data-priv="">
   <div class="rank">26</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/mogensig-16-9370-hals/sag-8280001099/">Mogensig 16, Hou, 9370 Hals</a></h2>
     <p class="price">598.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.083 m²</li>
-      <li><b>Bolig</b> 44 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Mogensig%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 737 kr./md.</li>
-      <li><b>Byggeår</b> 1979</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.083 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 44 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Mogensig%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 737 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1979</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Unknown">Privatliv: Ukendt</span>
-      <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 45/100</span>
-      <span class="t">Nabohus 5 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Unknown" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Ukendt</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 6/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 45/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 5 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 17 % under ønsket</span></p>
     <p class="warnbox">⚠ privatlivet kunne ikke vurderes paa billederne</p>
@@ -1159,26 +1311,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="dyrehavevej-2-9370" data-addr="Dyrehavevej 2, Mikkelmark, 9370 Hals" data-match="partial"
-  data-price="800000" data-plot="1050" data-living="89" data-cost="1042" data-area="Mikkelmark">
+  data-rank="27"
+  data-price="800000" data-plot="1050" data-living="89" data-cost="1042" data-area="Mikkelmark"
+  data-year="1972" data-days="21" data-chg="0"
+  data-total="44" data-green="5" data-nb="2"
+  data-val="3" data-priv="2">
   <div class="rank">27</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/dyrehavevej-2/93804336/">Dyrehavevej 2, Mikkelmark, 9370 Hals</a></h2>
     <p class="price">800.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.050 m²</li>
-      <li><b>Bolig</b> 89 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Dyrehavevej%202%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.042 kr./md.</li>
-      <li><b>Byggeår</b> 1972 (omb. 2004)</li>
-      <li><b>Til salg</b> 21 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.050 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 89 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Dyrehavevej%202%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.042 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1972 (omb. 2004)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 21 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Good">Score: God</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 44/100</span>
-      <span class="t">Nabohus 2 m</span>
+      <button type="button" class="t sk v-Good" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: God</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 5/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 44/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 2 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 19 % under ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (3/3): Billede 2: små fjerne huse/tage i horisonten bag det åbne græsareal til venstre; billede 1: grå tagflade bag hækken til venstre</p>
@@ -1199,26 +1355,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="hybenvej-11-9370" data-addr="Hybenvej 11, Hou, 9370 Hals" data-match="full"
-  data-price="1495000" data-plot="2533" data-living="80" data-cost="1163" data-area="Hou Syd">
+  data-rank="28"
+  data-price="1495000" data-plot="2533" data-living="80" data-cost="1163" data-area="Hou Syd"
+  data-year="1964" data-days="" data-chg=""
+  data-total="89" data-green="8" data-nb="9"
+  data-val="2" data-priv="3">
   <div class="rank">28</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0340-hybenvej-11">Hybenvej 11, Hou, 9370 Hals</a></h2>
     <p class="price">1.495.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 2.533 m²</li>
-      <li><b>Bolig</b> 80 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Hybenvej%2011%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Hou Syd på kort">Hou Syd<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.163 kr./md.</li>
-      <li><b>Byggeår</b> 1964</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 2.533 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 80 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Hybenvej%2011%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Hou Syd på kort">Hou Syd<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.163 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1964</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 89/100</span>
-      <span class="t">Nabohus 9 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 89/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 9 m</button>
     </p>
     
     
@@ -1239,26 +1399,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="vestvej-41-9370" data-addr="Vestvej 41, 9370 Hals" data-match="full"
-  data-price="895000" data-plot="1310" data-living="52" data-cost="1047" data-area="Bisnap Nord">
+  data-rank="29"
+  data-price="895000" data-plot="1310" data-living="52" data-cost="1047" data-area="Bisnap Nord"
+  data-year="1974" data-days="" data-chg=""
+  data-total="75" data-green="7" data-nb="7"
+  data-val="2" data-priv="3">
   <div class="rank">29</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/vestvej/n105912/n1059120000575">Vestvej 41, 9370 Hals</a></h2>
     <p class="price">895.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.310 m²</li>
-      <li><b>Bolig</b> 52 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Vestvej%2041%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.047 kr./md.</li>
-      <li><b>Byggeår</b> 1974</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.310 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 52 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Vestvej%2041%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.047 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1974</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 75/100</span>
-      <span class="t">Nabohus 7 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 75/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 7 m</button>
     </p>
     
     
@@ -1279,26 +1443,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="kongeparken-17-9370" data-addr="Kongeparken 17, Koldkær, 9370 Hals" data-match="partial"
-  data-price="998000" data-plot="1265" data-living="94" data-cost="1190" data-area="Torndrup Strand">
+  data-rank="30"
+  data-price="998000" data-plot="1265" data-living="94" data-cost="1190" data-area="Torndrup Strand"
+  data-year="1971" data-days="" data-chg=""
+  data-total="65" data-green="8" data-nb="4"
+  data-val="2" data-priv="3">
   <div class="rank">30</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/kongeparken/n105912/n1059120000303">Kongeparken 17, Koldkær, 9370 Hals</a></h2>
     <p class="price">998.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.265 m²</li>
-      <li><b>Bolig</b> 94 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kongeparken%2017%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.190 kr./md.</li>
-      <li><b>Byggeår</b> 1971</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.265 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 94 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kongeparken%2017%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.190 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1971</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 65/100</span>
-      <span class="t">Nabohus 4 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 65/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 4 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 3 % under ønsket</span></p>
     
@@ -1319,26 +1487,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="soegaardsvej-16-9370" data-addr="Søgårdsvej 16, 9370 Hals" data-match="partial"
-  data-price="940000" data-plot="1247" data-living="70" data-cost="763" data-area="Bisnap Nord">
+  data-rank="31"
+  data-price="940000" data-plot="1247" data-living="70" data-cost="763" data-area="Bisnap Nord"
+  data-year="1970" data-days="" data-chg=""
+  data-total="64" data-green="8" data-nb="0"
+  data-val="2" data-priv="3">
   <div class="rank">31</div>
   <div class="body">
     <h2><a href="https://home.dk/salg/sommerhuse/soegaardsvej-16-9370-hals/sag-8280001117/">Søgårdsvej 16, 9370 Hals</a></h2>
     <p class="price">940.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.247 m²</li>
-      <li><b>Bolig</b> 70 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=S%C3%B8g%C3%A5rdsvej%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 763 kr./md.</li>
-      <li><b>Byggeår</b> 1970</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.247 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 70 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=S%C3%B8g%C3%A5rdsvej%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap Nord på kort">Bisnap Nord<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 763 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1970</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 64/100</span>
-      <span class="t">Nabohus 0 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 64/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 0 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 4 % under ønsket</span></p>
     
@@ -1359,26 +1531,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="mosters-vaenge-34-9370" data-addr="Mosters Vænge 34, 9370 Hals" data-match="partial"
-  data-price="995000" data-plot="1161" data-living="107" data-cost="828" data-area="Koldkaer">
+  data-rank="32"
+  data-price="995000" data-plot="1161" data-living="107" data-cost="828" data-area="Koldkaer"
+  data-year="1968" data-days="" data-chg=""
+  data-total="60" data-green="8" data-nb="2"
+  data-val="2" data-priv="3">
   <div class="rank">32</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0191-mosters-vaenge-34">Mosters Vænge 34, 9370 Hals</a></h2>
     <p class="price">995.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.161 m²</li>
-      <li><b>Bolig</b> 107 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Mosters%20V%C3%A6nge%2034%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 828 kr./md.</li>
-      <li><b>Byggeår</b> 1968</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.161 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 107 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Mosters%20V%C3%A6nge%2034%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 828 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1968</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 8/10</span>
-      <span class="t">Samlet 60/100</span>
-      <span class="t">Nabohus 2 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 8/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 60/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 2 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 11 % under ønsket</span></p>
     
@@ -1399,26 +1575,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="palsgaardsmark-12-9370" data-addr="Palsgårdsmark 12, Hou, 9370 Hals" data-match="partial"
-  data-price="897000" data-plot="1049" data-living="65" data-cost="1091" data-area="Mikkelmark">
+  data-rank="33"
+  data-price="897000" data-plot="1049" data-living="65" data-cost="1091" data-area="Mikkelmark"
+  data-year="1969" data-days="158" data-chg="-5"
+  data-total="58" data-green="7" data-nb="5"
+  data-val="2" data-priv="3">
   <div class="rank">33</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/palsgaardsmark-12/93803909/">Palsgårdsmark 12, Hou, 9370 Hals</a></h2>
     <p class="price">897.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.049 m²</li>
-      <li><b>Bolig</b> 65 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Palsg%C3%A5rdsmark%2012%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.091 kr./md.</li>
-      <li><b>Byggeår</b> 1969 (omb. 1975)</li>
-      <li><b>Til salg</b> 158 dage</li>
-      <li><b>Prisudvikling</b> <span class="down">-5 %</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.049 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 65 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Palsg%C3%A5rdsmark%2012%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.091 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1969 (omb. 1975)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 158 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="chg" aria-label="Sortér efter prisudvikling"><b>Prisudvikling</b></button> <span class="down">-5 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-High">Privatliv: Høj</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 58/100</span>
-      <span class="t">Nabohus 5 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-High" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Høj</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 58/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 5 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 19 % under ønsket</span></p>
     
@@ -1439,26 +1619,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="portlandsvej-97c-9370" data-addr="Portlandsvej 97C, 9370 Hals" data-match="partial"
-  data-price="1148000" data-plot="71892" data-living="94" data-cost="2142" data-area="Koldkaer">
+  data-rank="34"
+  data-price="1148000" data-plot="71892" data-living="94" data-cost="2142" data-area="Koldkaer"
+  data-year="1990" data-days="" data-chg=""
+  data-total="57" data-green="3" data-nb="27"
+  data-val="2" data-priv="1">
   <div class="rank">34</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0328-portlandsvej-97c">Portlandsvej 97C, 9370 Hals</a></h2>
     <p class="price">1.148.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 71.892 m²</li>
-      <li><b>Bolig</b> 94 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Portlandsvej%2097C%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 2.142 kr./md.</li>
-      <li><b>Byggeår</b> 1990</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 71.892 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 94 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Portlandsvej%2097C%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 2.142 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1990</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Low">Privatliv: Lav</span>
-      <span class="t">Grønt 3/10</span>
-      <span class="t">Samlet 57/100</span>
-      <span class="t">Nabohus 27 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Low" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Lav</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 3/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 57/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 27 m</button>
     </p>
     <p class="devs"><span class="dev">▾ ejerudgift 7 % over ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (3/3): Terrasse vender ud mod stor åben fællesplæne med altaner overfor; ingen lodret afskærmning, fuldt indblik fra alle sider.</p>
@@ -1479,26 +1663,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="junovej-4-9370" data-addr="Junovej 4, Gl Bisnap, 9370 Hals" data-match="partial"
-  data-price="1095000" data-plot="1305" data-living="83" data-cost="1184" data-area="Bisnap">
+  data-rank="35"
+  data-price="1095000" data-plot="1305" data-living="83" data-cost="1184" data-area="Bisnap"
+  data-year="1974" data-days="153" data-chg="0"
+  data-total="54" data-green="4" data-nb="9"
+  data-val="2" data-priv="2">
   <div class="rank">35</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/junovej-4/93804104/">Junovej 4, Gl Bisnap, 9370 Hals</a></h2>
     <p class="price">1.095.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.305 m²</li>
-      <li><b>Bolig</b> 83 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Junovej%204%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap på kort">Bisnap<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.184 kr./md.</li>
-      <li><b>Byggeår</b> 1974</li>
-      <li><b>Til salg</b> 153 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.305 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 83 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Junovej%204%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Bisnap på kort">Bisnap<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.184 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1974</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 153 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 4/10</span>
-      <span class="t">Samlet 54/100</span>
-      <span class="t">Nabohus 9 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 4/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 54/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 9 m</button>
     </p>
     
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (2/3): På foto fra indkørsel/forside anes fremmede sommerhustage bag træer; fra haven mest lav trådhegn mod åbent areal</p>
@@ -1519,26 +1707,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="kimbrervej-6-9370" data-addr="Kimbrervej 6, Koldkær, 9370 Hals" data-match="partial"
-  data-price="1198000" data-plot="1267" data-living="107" data-cost="1401" data-area="Torndrup Strand">
+  data-rank="36"
+  data-price="1198000" data-plot="1267" data-living="107" data-cost="1401" data-area="Torndrup Strand"
+  data-year="1950" data-days="109" data-chg="0"
+  data-total="49" data-green="5" data-nb="4"
+  data-val="2" data-priv="2">
   <div class="rank">36</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/kimbrervej-6/93804206/">Kimbrervej 6, Koldkær, 9370 Hals</a></h2>
     <p class="price">1.198.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.267 m²</li>
-      <li><b>Bolig</b> 107 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kimbrervej%206%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.401 kr./md.</li>
-      <li><b>Byggeår</b> 1950 (omb. 2005)</li>
-      <li><b>Til salg</b> 109 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.267 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 107 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kimbrervej%206%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.401 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1950 (omb. 2005)</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 109 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 49/100</span>
-      <span class="t">Nabohus 4 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 5/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 49/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 4 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 3 % under ønsket</span></p>
     
@@ -1559,26 +1751,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="portlandsvej-137-9370" data-addr="Portlandsvej 137, 9370 Hals" data-match="partial"
-  data-price="695000" data-plot="71893" data-living="53" data-cost="2134" data-area="Koldkaer">
+  data-rank="37"
+  data-price="695000" data-plot="71893" data-living="53" data-cost="2134" data-area="Koldkaer"
+  data-year="1990" data-days="361" data-chg="0"
+  data-total="48" data-green="3" data-nb="24"
+  data-val="2" data-priv="1">
   <div class="rank">37</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/portlandsvej-137-1/93803264/">Portlandsvej 137, 9370 Hals</a></h2>
     <p class="price">695.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 71.893 m²</li>
-      <li><b>Bolig</b> 53 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Portlandsvej%20137%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 2.134 kr./md.</li>
-      <li><b>Byggeår</b> 1990</li>
-      <li><b>Til salg</b> 361 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 71.893 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 53 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Portlandsvej%20137%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 2.134 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1990</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 361 dage</li>
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Low">Privatliv: Lav</span>
-      <span class="t">Grønt 3/10</span>
-      <span class="t">Samlet 48/100</span>
-      <span class="t">Nabohus 24 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Low" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Lav</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 3/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 48/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 24 m</button>
     </p>
     <p class="devs"><span class="dev">▾ ejerudgift 7 % over ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (3/3): Ferielejlighed i feriecenter med fælles, åben plæne og altaner side om side — ingen hæk eller beplantning skærmer af.</p>
@@ -1599,26 +1795,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="nordmarksvej-18-9370" data-addr="Nordmarksvej 18, 9370 Hals" data-match="partial"
-  data-price="799000" data-plot="1195" data-living="64" data-cost="841" data-area="Torndrup Strand">
+  data-rank="38"
+  data-price="799000" data-plot="1195" data-living="64" data-cost="841" data-area="Torndrup Strand"
+  data-year="1979" data-days="" data-chg=""
+  data-total="48" data-green="6" data-nb="4"
+  data-val="2" data-priv="2">
   <div class="rank">38</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/nordmarksvej/n105912/n1059120000198">Nordmarksvej 18, 9370 Hals</a></h2>
     <p class="price">799.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.195 m²</li>
-      <li><b>Bolig</b> 64 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Nordmarksvej%2018%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 841 kr./md.</li>
-      <li><b>Byggeår</b> 1979</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.195 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 64 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Nordmarksvej%2018%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 841 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1979</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 48/100</span>
-      <span class="t">Nabohus 4 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 6/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 48/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 4 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 8 % under ønsket</span></p>
     
@@ -1639,26 +1839,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="kimbrervej-18-9370" data-addr="Kimbrervej 18, Koldkær, 9370 Hals" data-match="partial"
-  data-price="1095000" data-plot="1294" data-living="98" data-cost="1247" data-area="Torndrup Strand">
+  data-rank="39"
+  data-price="1095000" data-plot="1294" data-living="98" data-cost="1247" data-area="Torndrup Strand"
+  data-year="1991" data-days="112" data-chg="-4"
+  data-total="46" data-green="5" data-nb="1"
+  data-val="2" data-priv="2">
   <div class="rank">39</div>
   <div class="body">
     <h2><a href="https://www.edc.dk/alle-boliger/sommerhus/9370-hals/kimbrervej-18/93804150/">Kimbrervej 18, Koldkær, 9370 Hals</a></h2>
     <p class="price">1.095.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.294 m²</li>
-      <li><b>Bolig</b> 98 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kimbrervej%2018%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.247 kr./md.</li>
-      <li><b>Byggeår</b> 1991</li>
-      <li><b>Til salg</b> 112 dage</li>
-      <li><b>Prisudvikling</b> <span class="down">-4 %</span></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.294 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 98 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kimbrervej%2018%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.247 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1991</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="days" aria-label="Sortér efter liggetid"><b>Til salg</b></button> 112 dage</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="chg" aria-label="Sortér efter prisudvikling"><b>Prisudvikling</b></button> <span class="down">-4 %</span></li>
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 46/100</span>
-      <span class="t">Nabohus 1 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 5/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 46/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 1 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 0 % under ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (2/3): På terrassefotoet anes lyse tag-/bygningsflader bag hegnet til højre; luftfoto viser nabohus tæt på i venstre skel</p>
@@ -1679,26 +1883,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="kroejbergsvej-16-9370" data-addr="Krøjbergsvej 16, Koldkær, 9370 Hals" data-match="partial"
-  data-price="695000" data-plot="1089" data-living="51" data-cost="918" data-area="Koldkaer">
+  data-rank="40"
+  data-price="695000" data-plot="1089" data-living="51" data-cost="918" data-area="Koldkaer"
+  data-year="1968" data-days="" data-chg=""
+  data-total="38" data-green="6" data-nb="8"
+  data-val="2" data-priv="2">
   <div class="rank">40</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-0311-kroejbergsvej-16-koldkaer">Krøjbergsvej 16, Koldkær, 9370 Hals</a></h2>
     <p class="price">695.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.089 m²</li>
-      <li><b>Bolig</b> 51 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kr%C3%B8jbergsvej%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 918 kr./md.</li>
-      <li><b>Byggeår</b> 1968</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.089 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 51 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Kr%C3%B8jbergsvej%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Koldkaer på kort">Koldkaer<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 918 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1968</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 6/10</span>
-      <span class="t">Samlet 38/100</span>
-      <span class="t">Nabohus 8 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 6/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 38/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 8 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 16 % under ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (3/3): Mørkt sommerhus med brunt tegltag anes til venstre bag træhegnet på havebilledet</p>
@@ -1719,26 +1927,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="lindeparken-8-9370" data-addr="Lindeparken 8, 9370 Hals" data-match="partial"
-  data-price="890000" data-plot="1097" data-living="63" data-cost="1085" data-area="Torndrup Strand">
+  data-rank="41"
+  data-price="890000" data-plot="1097" data-living="63" data-cost="1085" data-area="Torndrup Strand"
+  data-year="1986" data-days="" data-chg=""
+  data-total="37" data-green="5" data-nb="3"
+  data-val="2" data-priv="2">
   <div class="rank">41</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/lindeparken/n105912/n1059120000233">Lindeparken 8, 9370 Hals</a></h2>
     <p class="price">890.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.097 m²</li>
-      <li><b>Bolig</b> 63 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Lindeparken%208%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.085 kr./md.</li>
-      <li><b>Byggeår</b> 1986</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.097 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 63 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Lindeparken%208%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndrup Strand på kort">Torndrup Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.085 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1986</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 5/10</span>
-      <span class="t">Samlet 37/100</span>
-      <span class="t">Nabohus 3 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 5/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 37/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 3 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 16 % under ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (3/3): På luftfoto/skråfoto anes gult sommerhus mod højre bag træerne; fra jordniveau er indblikket begrænset men grunden er åben mod siden</p>
@@ -1759,26 +1971,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="blaalyngvej-16-9370" data-addr="Blålyngvej 16, Lyngøen, 9370 Hals" data-match="partial"
-  data-price="998000" data-plot="1051" data-living="108" data-cost="1459" data-area="Torndal Strand">
+  data-rank="42"
+  data-price="998000" data-plot="1051" data-living="108" data-cost="1459" data-area="Torndal Strand"
+  data-year="1971" data-days="" data-chg=""
+  data-total="37" data-green="7" data-nb="5"
+  data-val="2" data-priv="2">
   <div class="rank">42</div>
   <div class="body">
     <h2><a href="https://www.realmaeglerne.dk/bolig/448-1036-blaalyngvej-16-lyngoeen">Blålyngvej 16, Lyngøen, 9370 Hals</a></h2>
     <p class="price">998.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.051 m²</li>
-      <li><b>Bolig</b> 108 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Bl%C3%A5lyngvej%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndal Strand på kort">Torndal Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 1.459 kr./md.</li>
-      <li><b>Byggeår</b> 1971</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.051 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 108 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Bl%C3%A5lyngvej%2016%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Torndal Strand på kort">Torndal Strand<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 1.459 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1971</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Medium">Privatliv: Middel</span>
-      <span class="t">Grønt 7/10</span>
-      <span class="t">Samlet 37/100</span>
-      <span class="t">Nabohus 5 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Medium" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Middel</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 7/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 37/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 5 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 19 % under ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (3/3): Foto 1: hvid overdækning/telt og bygningsdele i højre billedkant tæt på grunden</p>
@@ -1799,26 +2015,30 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
   </div>
 </article>
 <article class="k" data-id="hou-vest-3-9370" data-addr="Hou Vest 3, Hou, 9370 Hals" data-match="partial"
-  data-price="925000" data-plot="1269" data-living="71" data-cost="770" data-area="Mikkelmark">
+  data-rank="43"
+  data-price="925000" data-plot="1269" data-living="71" data-cost="770" data-area="Mikkelmark"
+  data-year="1967" data-days="" data-chg=""
+  data-total="34" data-green="4" data-nb="10"
+  data-val="2" data-priv="1">
   <div class="rank">43</div>
   <div class="body">
     <h2><a href="https://www.nybolig.dk/fritidshus/9370/houvest/n105912/n1059120000452">Hou Vest 3, Hou, 9370 Hals</a></h2>
     <p class="price">925.000 kr.</p>
     <ul class="facts">
-      <li><b>Grund</b> 1.269 m²</li>
-      <li><b>Bolig</b> 71 m²</li>
-      <li><b>Område</b> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Hou%20Vest%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
-      <li><b>Ejerudgift</b> 770 kr./md.</li>
-      <li><b>Byggeår</b> 1967</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="plot" aria-label="Sortér efter grundstørrelse"><b>Grund</b></button> 1.269 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="living" aria-label="Sortér efter boligstørrelse"><b>Bolig</b></button> 71 m²</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="area" aria-label="Sortér efter område"><b>Område</b></button> <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Hou%20Vest%203%2C%209370%20Hals%2C%20Danmark" aria-label="Vis Mikkelmark på kort">Mikkelmark<span class="mappin" aria-hidden="true">📍</span></a></li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="cost" aria-label="Sortér efter ejerudgift"><b>Ejerudgift</b></button> 770 kr./md.</li>
+      <li><button type="button" class="sk" tabindex="-1" data-k="year" aria-label="Sortér efter byggeår"><b>Byggeår</b></button> 1967</li>
       
       
     </ul>
     <p class="tags">
-      <span class="t v-Average">Score: Middel</span>
-      <span class="t p-Low">Privatliv: Lav</span>
-      <span class="t">Grønt 4/10</span>
-      <span class="t">Samlet 34/100</span>
-      <span class="t">Nabohus 10 m</span>
+      <button type="button" class="t sk v-Average" tabindex="-1" data-k="val" aria-label="Sortér efter value for money">Score: Middel</button>
+      <button type="button" class="t sk p-Low" tabindex="-1" data-k="priv" aria-label="Sortér efter privatliv">Privatliv: Lav</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="green" aria-label="Sortér efter grønt">Grønt 4/10</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="total" aria-label="Sortér efter samlet score">Samlet 34/100</button>
+      <button type="button" class="t sk" tabindex="-1" data-k="nb" aria-label="Sortér efter afstand til nabohus">Nabohus 10 m</button>
     </p>
     <p class="devs"><span class="dev">▾ grund 2 % under ønsket</span></p>
     <p class="warnbox">⚠ muligt indblik fra naboer — IKKE bekraeftet (2/3): Hvidt nabohus samt yderligere bebyggelse ses tydeligt fra grunden på foto 11; hvid bygning anes også bag plænen på foto 1</p>
@@ -1850,6 +2070,11 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||'{}') }catch(e){ return {} } }
   function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)) }catch(e){} }
   var data=load();
+
+  // Sorteringens tilstand deklareres HER - foer de foerste klik-lyttere. De kalder
+  // apply() -> cmp() -> S. I dag kan de ikke fyre foer scriptet er faerdigt, men
+  // flyttes koden nogensinde til DOMContentLoaded, ville S vaere undefined.
+  var S={k:'rank',dir:'asc'};
 
   // Sete boliger - gemmes kun paa denne telefon.
   var SKEY='hou-set-v1', SVKEY='hou-vis-sete-v1';
@@ -1885,7 +2110,7 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
   }
   function gemPos(id){
     try{
-      var p={y:window.scrollY,t:Date.now()};
+      var p={y:window.scrollY,t:Date.now(),s:S.k+'|'+S.dir};
       if(id) p.id=id; else if(sidstSete) p.id=sidstSete;
       localStorage.setItem(SPKEY,JSON.stringify(p));
     }catch(e){}
@@ -1977,6 +2202,13 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
         var th=src.querySelector('.thumb'); var thHtml=th?'<img class="thumb" src="'+th.getAttribute('src')+'" loading="lazy" alt="">':'';
         d.innerHTML='<div class="body"><h2>'+addr+'</h2>'+thHtml+'<p class="price">'+price+'</p>'+facts+
           (data[id].note?'<p class="usernote">'+data[id].note.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</p>':'')+'</div>';
+        // Fakta-felterne kopieres som ren tekst (outerHTML). Sorterings-knapperne
+        // ville derfor staa som knapper der ikke kan noget - klik-lytteren scoper
+        // til article.k. De pakkes ud, saa favoritterne ser ud som foer.
+        [].slice.call(d.querySelectorAll('button.sk')).forEach(function(b){
+          var txt=document.createTextNode(b.textContent);
+          b.parentNode.replaceChild(txt,b);
+        });
       } else {
         // Adressen kommer fra localStorage (gemt via dataset.addr, som DOM'en leverer
         // AFKODET). Den maa derfor aldrig sattes med innerHTML - saa ville en adresse
@@ -2062,6 +2294,121 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
     areaBox.appendChild(l);
   });
 
+  // ---- Sortering ------------------------------------------------------------
+  // Ét tryk paa en knap sorterer efter det felt; et tryk mere vender retningen.
+  // Standard for tal er STOERST foerst (det er den maade man laeser listen paa:
+  // stoerst grund, hoejest score); for tekst er det A-AA.
+  //
+  // Manglende vaerdier ligger ALTID nederst - i begge retninger. En bolig uden
+  // fx liggetid maa aldrig havne oeverst som om den var nul, og maa aldrig
+  // forsvinde. Sortering skjuler intet; den flytter kun raekkefoelgen.
+  var SORTKEY='hou-sort-v1';
+  var TXT={rank:'standard',price:'pris',plot:'grund',living:'bolig',cost:'ejerudgift',year:'byggeår',
+           days:'liggetid',chg:'prisudvikling',total:'samlet score',val:'value',priv:'privatliv',
+           green:'grønt',nb:'afstand til nabohus',area:'område'};
+  var TEKSTFELT={area:1};
+  // Retningen ved FOERSTE tryk. Talfelter er 'hoejest foerst' (stoerst grund, hoejest
+  // ejerudgift - som Thomas bad om). Undtagelser: pris og prisudvikling, hvor det
+  // interessante er det laveste tal (billigst hus, stoerste prisFALD). Ét tryk mere
+  // vender altid.
+  var FOERSTE={price:'asc',chg:'asc',area:'asc',rank:'asc'};
+  // Collator er markant hurtigere end localeCompare pr. kald og faar ae/oe/aa rigtigt.
+  var coll=(typeof Intl!=='undefined'&&Intl.Collator)?new Intl.Collator('da',{numeric:true,sensitivity:'base'}):null;
+  // FIX: almindeligt objekt-opslag ville acceptere 'constructor', '__proto__' osv.
+  // fra localStorage. Kun egne noegler taeller, og retningen hvidlistes.
+  function kendtFelt(k){ return typeof k==='string'&&Object.prototype.hasOwnProperty.call(TXT,k) }
+  try{
+    var gemt=JSON.parse(localStorage.getItem(SORTKEY)||'null');
+    if(gemt&&kendtFelt(gemt.k)) S={k:gemt.k,dir:gemt.dir==='asc'?'asc':'desc'};
+  }catch(e){}
+
+  // Uden tjek her ville en fejl paa linjen draebe ALT nedenfor: filtre, reset og
+  // gendannelsen af scroll-positionen ligger senere i samme funktion.
+  var bar=document.getElementById('sortbar');
+  var status=document.getElementById('sortstatus');
+  var listParent=cards.length?cards[0].parentNode:null;
+  var listEnd=document.querySelector('footer');
+
+  function tal(c,k){ var v=c.dataset[k]; if(v===''||v==null) return null; var n=Number(v); return isFinite(n)?n:null }
+  function tekst(c,k){ var v=c.dataset[k]; return (v==null||v==='')?null:v }
+
+  function cmp(a,b){
+    var k=S.k, txt=TEKSTFELT[k];
+    var va=txt?tekst(a,k):tal(a,k), vb=txt?tekst(b,k):tal(b,k);
+    // Ukendt altid nederst - uanset retning.
+    if(va==null&&vb==null) return tal(a,'rank')-tal(b,'rank');
+    if(va==null) return 1;
+    if(vb==null) return -1;
+    var d=txt?(coll?coll.compare(va,vb):(va<vb?-1:va>vb?1:0)):(va-vb);
+    if(S.dir==='desc') d=-d;
+    // Uafgjort falder tilbage paa standardraekkefoelgen, saa listen er forudsigelig.
+    return d||(tal(a,'rank')-tal(b,'rank'));
+  }
+
+  function sortCards(){
+    if(!cards.length||!listParent) return;
+    cards.sort(cmp);
+    // Ét indgreb i DOM'en: alle kort flyttes samlet via et fragment.
+    // Kortene ligger i fragmentet indtil de saettes ind igen - gaar indsaettelsen
+    // galt, ville siden staa TOM. Derfor tjekkes ankeret foerst, og der er et
+    // fald-tilbage der altid virker.
+    var anker=(listEnd&&listEnd.parentNode===listParent)?listEnd:null;
+    var frag=document.createDocumentFragment();
+    for(var i=0;i<cards.length;i++) frag.appendChild(cards[i]);
+    try{
+      if(anker) listParent.insertBefore(frag,anker); else listParent.appendChild(frag);
+    }catch(e){
+      listParent.appendChild(frag);
+    }
+  }
+
+  var sidstSorteret=null;
+
+  function malSortBar(){
+    if(!bar) return;
+    var pile=S.dir==='desc'?'▼':'▲';
+    [].slice.call(bar.querySelectorAll('.sortchip')).forEach(function(b){
+      var aktiv=b.dataset.k===S.k;
+      b.setAttribute('aria-pressed',aktiv?'true':'false');
+      b.querySelector('.ar').textContent=aktiv&&S.k!=='rank'?pile:'';
+    });
+    var retning=TEKSTFELT[S.k]?(S.dir==='desc'?'Å-A':'A-Å'):(S.dir==='desc'?'højest først':'lavest først');
+    if(!status) return;
+    status.textContent=S.k==='rank'?'Standard rækkefølge: bedste score først.'
+      :('Sorteret efter '+TXT[S.k]+', '+retning+'.');
+  }
+
+  // Klik paa en etiket INDE i et boligkort. Én lytter paa dokumentet i stedet for
+  // 500+ lyttere. Betingelserne er vigtige:
+  //  - et klik paa et <a> (omraadets kort-link) vinder altid; vi kalder aldrig
+  //    stopPropagation paa linket, vi holder os bare vaek.
+  //  - closest('article.k') scoper til de RIGTIGE kort. Favoritsektionen indeholder
+  //    kopier i div.k, og de maa aldrig sortere hovedlisten.
+  //  - 'click' - aldrig touchstart/pointerdown: browseren undertrykker selv click
+  //    naar fingeren scroller, og WCAG 2.5.2 forbyder at handle paa down-event.
+  document.addEventListener('click',function(ev){
+    if(!ev.target.closest) return;
+    if(ev.target.closest('a')) return;
+    var knap=ev.target.closest('button.sk[data-k]');
+    if(!knap||!knap.closest('article.k')) return;
+    vaelgSortering(knap.dataset.k);
+  });
+
+  function vaelgSortering(k){
+    if(!TXT[k]) return;
+    if(k===S.k&&k!=='rank') S.dir=S.dir==='desc'?'asc':'desc';
+    else S={k:k,dir:FOERSTE[k]||'desc'};
+    try{ localStorage.setItem(SORTKEY,JSON.stringify(S)) }catch(e){}
+    apply();
+    var t=document.getElementById('alltitle'); if(t) t.scrollIntoView({block:'start'});
+  }
+
+  if(bar) bar.addEventListener('click',function(ev){
+    var b=ev.target.closest?ev.target.closest('.sortchip'):null;
+    if(!b) return;
+    vaelgSortering(b.dataset.k);
+  });
+
   var el={price:document.getElementById('f-price'),plot:document.getElementById('f-plot'),
           living:document.getElementById('f-living'),cost:document.getElementById('f-cost'),
           tol:document.getElementById('f-tol'),tolout:document.getElementById('f-tolout'),
@@ -2076,7 +2423,12 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
        areas:null,
        excl:[].slice.call(areaBox.querySelectorAll('input:not(:checked)')).map(function(c){return c.value})};
     el.tolout.textContent=F.tol+' %';
-    var t=F.tol/100, hidden=0, hiddenSeen=0;
+    // Kun naar sorteringen er skiftet. Ellers ville hvert tastetryk i filtrene
+    // flytte 43 kort (og rive tastatur-fokus vaek), og skaermlaeseren ville laese
+    // "Sorteret efter ..." op ved hvert tryk paa en talknap.
+    var naa=S.k+'|'+S.dir;
+    if(naa!==sidstSorteret){ sidstSorteret=naa; sortCards(); malSortBar(); }
+    var t=F.tol/100, hidden=0, hiddenSeen=0, vist=0;
     cards.forEach(function(c){
       var price=num(c.dataset.price),plot=num(c.dataset.plot),living=num(c.dataset.living),cost=num(c.dataset.cost);
       var show=true;
@@ -2090,6 +2442,9 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
       if(show&&!showSeen&&seen[c.dataset.id]&&seenAtLoad[c.dataset.id]){ show=false; seenHidden=true; }
       c.style.display=show?'':'none';
       if(!show){ if(seenHidden) hiddenSeen++; else hidden++; }
+      // Nummeret foelger den viste raekkefoelge. Foer stod der huller i talraekken
+      // saa snart et filter skjulte et kort.
+      else { vist++; var r=c.querySelector('.rank'); if(r) r.textContent=vist; }
     });
     var hparts=[];
     if(hidden) hparts.push(hidden+' boliger skjult af dine filtre');
@@ -2126,7 +2481,9 @@ Grundareal er matriklens målte tal fra Dataforsyningen. Privatliv er vurderet u
     if(!p) return false;
     var card=p.id?document.querySelector('article.k[data-id="'+p.id+'"]'):null;
     if(card&&card.style.display!=='none'){ card.scrollIntoView({block:'center'}); markerKort(card); return true }
-    if(p.y!=null){ window.scrollTo(0,p.y); return true }
+    // Uden hus-id er y kun meningsfuld hvis listen staar i samme raekkefoelge som
+    // dengang positionen blev gemt. Ellers peger y paa et helt andet hus.
+    if(p.y!=null&&(!p.s||p.s===S.k+'|'+S.dir)){ window.scrollTo(0,p.y); return true }
     return false;
   }
   // Kort blink paa det hus man sidst aabnede, saa man kan se hvor man slap.
